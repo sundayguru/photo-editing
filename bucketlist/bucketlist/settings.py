@@ -24,7 +24,10 @@ SECRET_KEY = '@f*bztzc-o%4zoas@34fwdss)^+98v+b96ea_w!(+uitaw&#_e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
