@@ -1,0 +1,5 @@
+*.pyc
+.env.yml
+db.sqlite3
+__pycache__
+bucketlist/bucketlist/development.py
