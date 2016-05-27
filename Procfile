@@ -1,1 +1,1 @@
-web: gunicorn bucketlist.wsgi
+web: gunicorn bucketlist.wsgi --pythonpath=bucketlist --log-file=-
