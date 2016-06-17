@@ -1,2 +1,3 @@
-# bucketlist-django
-According to Merriam-Webster Dictionary, a Bucket List is a list of things that one has not done before but wants to do before dying.
+# Heroku Quick Starter
+
+Sometimes it's very difficult for newbies to get Django app quickly setup for Heroku deployment. Heroku Quick Starter has been configured and ready to be deployed to Heroku.

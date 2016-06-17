@@ -1,6 +1,7 @@
 *.pyc
+.env.py
 .env.yml
 db.sqlite3
 __pycache__
-bucketlist/bucketlist/development.py
-bucketlist/static_cdn/*
+app/app/development.py
+app/static_cdn/*
