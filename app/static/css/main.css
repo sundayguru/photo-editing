@@ -1,3 +1,126 @@
-h1{
-    color: red;
+body{
+    position: relative;
+    overflow-x: hidden !important;
+}
+
+.table-of-contents{
+    height: 100vh;
+}
+
+.navbar-default{
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.right{
+    float: right;
+}
+
+.toolbar:hover{
+    color: black !important;
+}
+
+.left{
+    float: left;
+}
+
+.center{
+    text-align: center !important;
+}
+
+.no-file{
+    text-align:center;
+    margin-top:20%;
+}
+
+.line-left{
+    border-left: 1px #f4f4f4 solid;
+}
+
+.no-pad{
+    padding:0 !important;
+}
+
+.line-right{
+    border-right: 1px #ccc solid;
+}
+
+.icon-size-small{
+    max-width: 25px;
+    margin-right: 10px;
+}
+
+.options{
+    float: right;
+}
+.options .icon-size-small{
+    max-width: 20px;
+    margin-right: 10px;
+    float: left;
+}
+
+.padupdown{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padleft-20{
+    padding-left: 20px;
+}
+
+.icon-size-medium{
+    max-width: 50px;
+    margin-bottom: 5px;
+}
+
+.list-group-item{
+    border: none;
+    background:none;
+    color: black;
+}
+
+.main-item{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center !important;
+    height: 110px;
+    color: grey;
+    position: relative;
+}
+
+.main-item:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color: #eee333;
+}
+
+.active-main{
+    background-color: gray;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+
+.toolbar-nav {
+    margin-top: 35px;
+}
+
+.toolbar-btn {
+    margin-top: 10px;
+}
+
+.toolbar-nav li, .toolbar-btn li{
+    display: inline;
+    margin-right: 5px;
+}
+
+.login{
+    width: 500px;
+    position: absolute;
+    left: 20px;
+    top: 100px;
+}
+
+.login .panel{
+    background-color: rgba(255,255,255,.8);
 }

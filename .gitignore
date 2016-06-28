@@ -5,3 +5,4 @@ db.sqlite3
 __pycache__
 app/app/development.py
 app/static_cdn/*
+node_modules
