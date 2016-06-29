@@ -2,6 +2,7 @@ import React from 'react';
 import SideNav from '../SideNav';
 import Buttons from '../Buttons';
 import Nav from '../Nav';
+import Modal from '../Modal';
 
 export default class extends React.Component {
     constructor() {
@@ -22,6 +23,7 @@ export default class extends React.Component {
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-9">
                     { this.props.children }
+                    <Modal />
                 </div>
             </div>
           </div>

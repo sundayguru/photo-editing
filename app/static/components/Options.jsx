@@ -26,7 +26,7 @@ export default class extends React.Component {
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><img src="../static/images/icons/info.png" class="icon-size-small" /> Info</a>
+                        <a href="#" data-toggle="modal" data-target="#myModal"><img src="../static/images/icons/info.png" class="icon-size-small" /> Info</a>
                     </li>
                 </ul>
             </div>
