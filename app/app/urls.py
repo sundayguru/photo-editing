@@ -20,5 +20,5 @@ from photos import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
-    url(r'^sample/', include('photos.urls', namespace="photos", app_name="photos")),
+    url(r'^photos/', include('photos.urls', namespace="photos", app_name="photos")),
 ]

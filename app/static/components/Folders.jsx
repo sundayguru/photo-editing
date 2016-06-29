@@ -17,7 +17,7 @@ export default class extends React.Component {
             <Options />
             <a href="#"><img src="../static/images/icons/folder.png"  /></a>
               <div class="caption">
-                <h4>Campaign for beauty <span class="badge">4</span></h4>
+                <h5>Campaign for beauty <span class="badge">4</span></h5>
               </div>
             </div>
           </div>
@@ -26,9 +26,31 @@ export default class extends React.Component {
           <div class="col-sm-4 col-md-3">
             <div class="thumbnail">
             <Options />
-              <a href="#"> <img src="../static/images/slides/1.jpg" alt="..." /> </a>
+            <a href="#"><img src="../static/images/icons/folder.png"  /></a>
               <div class="caption">
-                <h4>Campaign for beauty <span class="badge">4</span></h4>
+                <h5>Campaign for beauty <span class="badge">4</span></h5>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+            <Options />
+            <a href="#"><img src="../static/images/icons/folder.png"  /></a>
+              <div class="caption">
+                <h5>Campaign for beauty <span class="badge">4</span></h5>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+            <Options />
+            <a href="#"><img src="../static/images/icons/folder.png"  /></a>
+              <div class="caption">
+                <h5>Campaign for beauty <span class="badge">4</span></h5>
               </div>
             </div>
           </div>
