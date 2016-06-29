@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNav from '../SideNav';
 import Buttons from '../Buttons';
+import Nav from '../Nav';
 
 export default class extends React.Component {
     constructor() {
@@ -10,7 +11,9 @@ export default class extends React.Component {
 
     render() {
         return (
-         <div>
+         <div class="row">
+          <Nav />
+          <div class="container">
             <Buttons />
             <hr/>
              <div class="row">
@@ -21,6 +24,7 @@ export default class extends React.Component {
                     { this.props.children }
                 </div>
             </div>
+          </div>
          </div>
         );
     }
