@@ -7,7 +7,7 @@ import Dashboard from '../components/pages/Dashboard';
 import Folders from '../components/Folders';
 import Upload from '../components/Upload';
 import Photos from '../components/Photos';
-import Edit from '../components/Edit';
+import EditImage from '../components/EditImage';
 import Folder from '../components/Folder';
 
 var index = $('#index').val();
@@ -25,7 +25,7 @@ ReactDOM.render(
             <IndexRoute component={ FirstPage } />
             <Route path="upload" component={ Upload } />
             <Route path="photos" component={ Photos } />
-            <Route path="edit" component={ Edit } />
+            <Route path="edit" component={ EditImage } />
             <Route path="folder" component={ Folder } />
         </Route>
     </Router>,
