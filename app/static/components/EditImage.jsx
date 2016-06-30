@@ -31,6 +31,7 @@ export default class extends React.Component {
                   <div class="row">
                   <div class="col-md-6 no-pad">
                     <p>Image Adjustments</p>
+
                   </div>
                   <div class="col-md-6">
                     <div class="btn-group right">
@@ -49,8 +50,9 @@ export default class extends React.Component {
 
 
                    <div class="form-group">
-                    <label class="control-label" for="brightness">Brightness </label>
-                    <input type="range" id="brightness" defaultValue={0} onChange={this.handleChange} />
+                    <label class="control-label w100" for="brightness"><span class="left">Brightness </span> <span class="right"><input type="checkbox" /></span></label>
+
+                    <input type="range" id="brightness" defaultValue={0} onChange={this.handleChange} disabled={true}/>
                   </div>
                    <div class="form-group">
                     <label class="control-label" for="saturation">Saturation</label>

@@ -13,7 +13,7 @@ export default class extends React.Component {
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown-menu-left">
                     <li>
-                        <a href="#/dashboard/edit">
+                        <a href="#/edit">
                             <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
                     </li>
                     <li>
