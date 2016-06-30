@@ -1,8 +1,10 @@
 import React from 'react';
+import Notifications from 'react-notify-toast';
 import SideNav from '../SideNav';
 import Buttons from '../Buttons';
 import Nav from '../Nav';
 import Modal from '../Modal';
+
 
 export default class extends React.Component {
     constructor() {
@@ -13,6 +15,7 @@ export default class extends React.Component {
     render() {
         return (
          <div class="row">
+         <Notifications />
           <Nav />
           <div class="container">
             <Buttons />

@@ -146,6 +146,7 @@ body{
     padding:10px;
 }
 
-.image-prev{
-
+#notification-wrapper {
+    position: absolute;
+    z-index: 9999999 !important;
 }
