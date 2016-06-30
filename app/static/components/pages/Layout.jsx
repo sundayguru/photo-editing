@@ -13,8 +13,10 @@ export default class extends React.Component {
     render() {
         return (
         <div class="row">
+
           <Nav />
           <div class="container">
+          <Notifications />
              {this.props.children}
           </div>
         </div>
