@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Photo Editing</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/themes/cosmo/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/custom.min.css' %}">
+    <link href="{% static 'css/style4.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/magnific-popup.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<input type="hidden" name="index" id='index' value="{{index}}" />
+ <div id = "app"></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src = "{% static 'build/client.min.js' %}"></script>
+</body>
+</html>
