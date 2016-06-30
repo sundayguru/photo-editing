@@ -7,7 +7,7 @@ import * as Toast from './actions/ToastAction';
 export default class extends React.Component {
     constructor() {
       super();
-      this.state = {loaded:true};
+      this.state = {loaded:true, user:{}};
     }
 
     componentWillMount(){
@@ -18,12 +18,20 @@ export default class extends React.Component {
       registerStore.removeListener('registerComplete', this.registerComplete.bind(this));
     }
 
+    login(username, password){
+      var form = new FormData();
+      form.append('username', username);
+      form.append('password', password);
+      action.perform(form, 'LOGIN');
+    }
+
     registerComplete(data){
       this.setState({loaded:true});
       if(data.status != 201){
         Toast.error(data.data.username[0]);
       }else{
         Toast.ok('Account created');
+        this.login(this.state.user.username, this.state.user.password);
       }
     }
 
@@ -34,6 +42,7 @@ export default class extends React.Component {
       dataArray.forEach(function(data){
         dataObject[data.name] = data.value;
       });
+      this.setState({user:dataObject});
       if(dataObject.password != dataObject.confirm_password){
         Toast.error('Password Mismatch');
         return false;
