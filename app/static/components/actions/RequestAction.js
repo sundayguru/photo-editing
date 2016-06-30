@@ -1,10 +1,29 @@
 import request from 'superagent';
 
+export function ajaxPost(path, data, callback, errorCallback){
+    data.append('csrfmiddlewaretoken', $('#form-token input').val());
+    $.ajax({
+      url: path,
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      headers: {
+        'X-CSRFToken': $('#form-token input').val()
+      },
+      data: data,
+      success: callback,
+      error: errorCallback
+    });
+
+}
+
 export function post(path, data, callback){
     var req = request.post(path);
+    data['csrfmiddlewaretoken'] = $('#form-token input').val();
     req.send(data);
     req.set('xsrfCookieName', 'csrftoken');
     req.set('xsrfHeaderName', 'X-CSRFToken');
+    req.set('X-CSRFToken', data['csrfmiddlewaretoken']);
     req.set('Accept', 'application/json');
     req.end(callback);
 }

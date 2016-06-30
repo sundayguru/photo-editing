@@ -20,5 +20,6 @@ from photos import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
+    url(r'^logout/$', views.logout_view),
     url(r'^api/v1/', include('photos.api.urls', namespace="api")),
 ]

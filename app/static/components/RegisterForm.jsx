@@ -1,7 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader';
 import registerStore from './store/RegisterStore';
-import * as registerActions from './actions/RegisterAction';
+import * as action from './actions/GenericAction';
 import * as Toast from './actions/ToastAction';
 
 export default class extends React.Component {
@@ -39,7 +39,7 @@ export default class extends React.Component {
         return false;
       }
       this.setState({loaded:false});
-      registerActions.register(dataObject);
+      action.perform(dataObject, 'NEW_REGISTER');
     }
 
     render() {

@@ -7,7 +7,7 @@ export default class extends React.Component {
     }
 
     render() {
-     const {user_active_class} = this.props;
+     const {user_active_class, user} = this.props;
         return (
          <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
@@ -23,9 +23,9 @@ export default class extends React.Component {
 
               <ul class={ "nav navbar-nav navbar-right " + user_active_class }>
                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sundayguru<span class="caret"></span></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">{ user }<span class="caret"></span></a>
                   <ul class="dropdown-menu" aria-labelledby="download">
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="/logout">Logout</a></li>
                   </ul>
                 </li>
               </ul>
