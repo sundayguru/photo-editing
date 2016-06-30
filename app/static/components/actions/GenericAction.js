@@ -1,8 +1,8 @@
 import dispatcher from '../../js/Dispatcher.js';
 
-export function register(content){
+export function perform(content, action_type){
     dispatcher.dispatch({
-        type:'NEW_REGISTER',
+        type:action_type,
         content
     });
 }

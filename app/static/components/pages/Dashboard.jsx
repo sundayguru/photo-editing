@@ -9,14 +9,14 @@ import Modal from '../Modal';
 export default class extends React.Component {
     constructor() {
       super();
-
+      this.state = {user: $('#current-user').val()}
     }
 
     render() {
         return (
          <div class="row">
          <Notifications />
-          <Nav />
+          <Nav user={ this.state.user }/>
           <div class="container">
             <Buttons />
             <hr/>

@@ -1,14 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 import json
 
 # Create your views here.
 def index(request):
-    context = { 'index': 'Login' if not request.user.is_authenticated() else 'Dashboard'}
+    context = {
+    'index': 'Login' if not request.user.is_authenticated() else 'Dashboard',
+    'user': request.user.username
+    }
     return render(request, 'base.html', context)
 
-# Create your views here.
-def test(request):
-    response_dict = {'status':'ok', 'test':'hello'}
-    response = json.dumps(response_dict)
-    return HttpResponse(response, content_type="application/json")
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
