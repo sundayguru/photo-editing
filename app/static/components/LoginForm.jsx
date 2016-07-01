@@ -33,17 +33,17 @@ export default class extends React.Component {
         e.preventDefault();
         var dataArray = $(e.target).serializeArray();
         var form = new FormData();
-        var dataObject = {};
         dataArray.forEach(function(data){
             form.append(data.name, data.value);
         });
+        this.setState({loaded:false});
         action.perform(form, 'LOGIN');
     }
 
     render() {
         return (
           <form class="form-horizontal" method="post" onSubmit={this.onSubmit.bind(this)}>
-            <Loader loaded={this.state.loaded} top="73%" />
+            <Loader loaded={this.state.loaded} top="50%" />
             <fieldset>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Username</label>

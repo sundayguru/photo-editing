@@ -9,6 +9,7 @@ import Upload from '../components/Upload';
 import Photos from '../components/Photos';
 import EditImage from '../components/EditImage';
 import Folder from '../components/Folder';
+import FolderContent from '../components/FolderContent';
 
 var index = $('#index').val();
 var Home = HomeLayout;
@@ -27,6 +28,7 @@ ReactDOM.render(
             <Route path="photos" component={ Photos } />
             <Route path="edit" component={ EditImage } />
             <Route path="folder" component={ Folder } />
+            <Route path="folder/:id" component={ FolderContent } />
         </Route>
     </Router>,
   document.getElementById('app')
