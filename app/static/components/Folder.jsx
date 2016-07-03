@@ -6,17 +6,29 @@ import store from './store/FolderStore';
 
 
 export default class extends React.Component {
-    constructor() {
+
+    constructor(){
       super();
-      this.state = {loaded:true};
+      this.detail = this.detail.bind(this);
+      this.complete = this.complete.bind(this);
     }
 
     componentWillMount(){
-      store.on('newFolder', this.complete.bind(this));
+      this.state = {
+        loaded: true,
+        id:this.props.params.id
+      };
+
+      if(this.props.params.id){
+        store.get(this.props.params.id)
+      }
+
+      store.on('newFolder', this.complete);
+      store.on('singleFolder', this.detail);
     }
 
     componentWillUnmount(){
-      store.removeListener('newFolder', this.complete.bind(this));
+      store.removeListener('newFolder', this.complete);
     }
 
     complete(data){
@@ -24,9 +36,19 @@ export default class extends React.Component {
       if(data.status == 201){
         Toast.ok('New folder created');
         document.location.href = '#/folder/'+data.data.id;
+      }else if(data.status == 200){
+        Toast.ok('Folder updated');
+        document.location.href = '#/folder/'+data.data.id;
       }else{
-        Toast.error('Unable to create folder');
+        Toast.error('Unable to complete request');
       }
+    }
+
+    detail(data){
+      if(data.status == 200){
+        $('#name').val(data.data.name);
+      }
+
     }
 
     onSubmit(e){
@@ -36,11 +58,18 @@ export default class extends React.Component {
       dataArray.forEach(function(data){
           form.append(data.name, data.value);
       });
+
+      if(this.props.params.id){
+         form.append('id', this.props.params.id);
+      }
+
       this.setState({loaded:false});
-      action.perform(form, 'NEW_FOLDER');
+      var actionType = this.props.params.id ?  'UPDATE_FOLDER' :  'NEW_FOLDER';
+      action.perform(form, actionType);
     }
 
     render() {
+
         return (
          <div class="col-md-12">
             <h3>New Folder</h3>

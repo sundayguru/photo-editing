@@ -1,11 +1,6 @@
 import React from 'react';
 
 export default class extends React.Component {
-    constructor() {
-      super();
-
-    }
-
     render() {
         const {editLink, deleteMethod} = this.props;
         return (

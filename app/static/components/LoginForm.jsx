@@ -8,10 +8,11 @@ import loginStore from './store/LoginStore';
 export default class extends React.Component {
     constructor() {
       super();
-      this.state = {loaded:true};
+
     }
 
     componentWillMount(){
+        this.state = {loaded:true};
       loginStore.on('loginComplete', this.loginComplete.bind(this));
     }
 

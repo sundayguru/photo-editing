@@ -3,6 +3,7 @@ import Loader from 'react-loader';
 import Options from '../components/Options';
 import * as action from './actions/GenericAction';
 import FolderThumb from './FolderThumb';
+import Empty from './Empty';
 import store from './store/FolderStore';
 import Pagination from './Pagination';
 
@@ -13,19 +14,19 @@ export default class extends React.Component {
         loaded:false,
         folders:[]
       }
+      this.complete = this.complete.bind(this);
     }
 
     componentWillMount(){
-      store.on('listFolder', this.complete.bind(this));
+      store.on('listFolder', this.complete);
       store.getAll();
     }
 
     componentWillUnmount(){
-      store.removeListener('listFolder', this.complete.bind(this));
+      store.removeListener('listFolder', this.complete);
     }
 
     complete(data){
-      console.log(data)
       this.setState({
         folders: data.data,
         loaded: true
@@ -34,6 +35,11 @@ export default class extends React.Component {
 
     render() {
         const folders = this.state.folders.map((item) => { return <FolderThumb key={item.id} {...item} /> });
+        if(!folders.length){
+          return (
+            <Empty title="No folder found" />
+          )
+        }
         return (
          <div class="row">
          <div class="col-md-12">

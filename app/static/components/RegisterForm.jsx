@@ -7,10 +7,11 @@ import * as Toast from './actions/ToastAction';
 export default class extends React.Component {
     constructor() {
       super();
-      this.state = {loaded:true, user:{}};
+
     }
 
     componentWillMount(){
+      this.state = {loaded:true, user:{}};
       registerStore.on('registerComplete', this.registerComplete.bind(this));
     }
 

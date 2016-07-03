@@ -27,6 +27,7 @@ ReactDOM.render(
             <Route path="upload" component={ Upload } />
             <Route path="photos" component={ Photos } />
             <Route path="edit" component={ EditImage } />
+            <Route path="editfolder/:id" component={ Folder } />
             <Route path="folder" component={ Folder } />
             <Route path="folder/:id" component={ FolderContent } />
         </Route>

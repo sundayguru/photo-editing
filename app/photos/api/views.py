@@ -17,9 +17,7 @@ from rest_framework.permissions import (
     IsAuthenticated,
 )
 from .serializers import *
-
 from .permissions import IsOwner
-from rest_framework import status
 
 
 class RegistrationApiView(CreateAPIView):
@@ -85,3 +83,28 @@ class FolderApiView(ListCreateAPIView):
     def get_queryset(self):
         queryset = Folder.objects.filter(user=self.request.user)
         return queryset
+
+
+class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
+
+    """
+    Returns individual folder detail if you are doing a GET request.
+    Updates individual folder detail if you are doing a PUT request.
+    Deletes individual folder detail if you are doing a DELETE request.
+
+    Method: GET
+    Response: JSON
+
+    Method: PUT
+      Parameters:
+          name  (required)
+      Response: JSON
+
+    Method: DELETE
+        Response: JSON
+
+    """
+    queryset = Folder.objects.all()
+    serializer_class = FolderSerializer
+    permission_classes = [IsOwner]
+    lookup_field = 'id'
