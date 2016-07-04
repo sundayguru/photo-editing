@@ -24,9 +24,12 @@ class FolderStore extends EventEmitter {
         });
     }
 
-    getAll(){
+    getAll(page){
         var _this = this;
-        request.get('/api/v1/folders/', (err, result) => {
+        if(page == undefined)
+            page = 1;
+
+        request.get('/api/v1/folders/?page=' + page, (err, result) => {
             _this.emit('listFolder', {status: result.status, data: JSON.parse(result.text) });
         });
     }

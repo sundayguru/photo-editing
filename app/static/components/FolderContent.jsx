@@ -11,7 +11,6 @@ export default class extends React.Component {
       super();
     }
 
-
     render() {
         return (
           <Empty />

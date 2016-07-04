@@ -6,6 +6,8 @@ import FolderThumb from './FolderThumb';
 import Empty from './Empty';
 import store from './store/FolderStore';
 import Pagination from './Pagination';
+import ReactPaginate from 'react-paginate';
+import storeFolder from './store/FolderStore';
 
 export default class extends React.Component {
     constructor() {
@@ -26,9 +28,17 @@ export default class extends React.Component {
       store.removeListener('listFolder', this.complete);
     }
 
+    getNext(data){
+        var page = data.selected + 1;
+        storeFolder.getAll(page);
+    }
+
     complete(data){
       this.setState({
-        folders: data.data,
+        folders: data.data.results,
+        next:data.data.next,
+        previous: data.data.previous,
+        count: data.data.count,
         loaded: true
       })
     }
@@ -40,6 +50,10 @@ export default class extends React.Component {
             <Empty title="No folder found" />
           )
         }
+        var paginate = '';
+        if(this.state.next || this.state.previous){
+          paginate = <ReactPaginate pageNum={this.state.count/8} pageRangeDisplayed={8} marginPagesDisplayed={8} containerClassName={"pagination pagination-sm right"} clickCallback={this.getNext} />;
+        }
         return (
          <div class="row">
          <div class="col-md-12">
@@ -47,7 +61,7 @@ export default class extends React.Component {
           {folders}
           </div>
           <div class="col-md-12">
-            <Pagination />
+            {paginate}
           </div>
          </div>
         );
