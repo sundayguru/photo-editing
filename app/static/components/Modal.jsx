@@ -1,9 +1,24 @@
 import React from 'react';
+import FolderInfo from './FolderInfo';
+import storeFolder from './store/FolderStore';
 
 export default class extends React.Component {
     constructor() {
       super();
+      this.detail = this.detail.bind(this)
+      this.state = {title:'', data:{}};
+    }
 
+    detail(data){
+      this.setState({data:data.data, title: data.data.name});
+    }
+
+    componentWillMount(){
+      storeFolder.on('singleFolder', this.detail);
+    }
+
+    componentWillUnmount(){
+      storeFolder.removeListener('singleFolder', this.detail);
     }
 
     render() {
@@ -14,10 +29,10 @@ export default class extends React.Component {
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel"> {this.state.title} </h4>
                   </div>
                   <div class="modal-body">
-                    somethings here
+                    <FolderInfo data={this.state.data} />
                   </div>
                 </div>
               </div>

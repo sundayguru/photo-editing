@@ -35,10 +35,10 @@ export default class extends React.Component {
       this.setState({loaded:true});
       if(data.status == 201){
         Toast.ok('New folder created');
-        document.location.href = '#/folder/'+data.data.id;
+        document.location.href = '#/';
       }else if(data.status == 200){
         Toast.ok('Folder updated');
-        document.location.href = '#/folder/'+data.data.id;
+        document.location.href = '#/';
       }else{
         Toast.error('Unable to complete request');
       }

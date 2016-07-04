@@ -1,8 +1,16 @@
 import React from 'react';
+import storeFolder from './store/FolderStore';
 
 export default class extends React.Component {
+    toggleModal(e){
+        e.preventDefault();
+        $('#myModal').modal();
+        storeFolder.get(this.id);
+    }
+
     render() {
-        const {editLink, deleteMethod} = this.props;
+        const {editLink, deleteMethod, id} = this.props;
+        this.id = id
         return (
          <div class="options">
           <div class="btn-group">
@@ -18,7 +26,7 @@ export default class extends React.Component {
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#myModal"><img src="../static/images/icons/info.png" class="icon-size-small" /> Info</a>
+                        <a href="#" onClick={ this.toggleModal.bind(this) } ><img src="../static/images/icons/info.png" class="icon-size-small" /> Info</a>
                     </li>
                 </ul>
             </div>
