@@ -3,7 +3,8 @@ import Notifications from 'react-notify-toast';
 import SideNav from '../SideNav';
 import Buttons from '../Buttons';
 import Nav from '../Nav';
-import Modal from '../Modal';
+import DetailModal from '../DetailModal';
+import FolderModal from '../FolderModal';
 
 
 export default class extends React.Component {
@@ -26,7 +27,8 @@ export default class extends React.Component {
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-9">
                     { this.props.children }
-                    <Modal />
+                    <DetailModal />
+                    <FolderModal />
                 </div>
             </div>
           </div>

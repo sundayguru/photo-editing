@@ -150,3 +150,13 @@ body{
     position: absolute;
     z-index: 9999999 !important;
 }
+
+.empty{
+    text-align: center !important;
+}
+
+.empty img{
+    opacity: 0.1;
+    width: 120px;
+    margin-top: 100px;
+}

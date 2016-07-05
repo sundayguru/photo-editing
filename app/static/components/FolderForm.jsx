@@ -12,15 +12,7 @@ export default class extends React.Component {
     }
 
     componentWillMount(){
-      this.state = {
-        loaded: true,
-        id:this.props.params.id
-      };
-
-      if(this.props.params.id){
-        store.get(this.props.params.id)
-      }
-
+      this.state = {loaded: true};
       store.on('newFolder', this.complete);
       store.on('singleFolder', this.detail);
     }
@@ -33,18 +25,22 @@ export default class extends React.Component {
       this.setState({loaded:true});
       if(data.status == 201){
         Toast.ok('New folder created');
-        document.location.href = '#/';
+        $('#formModal').modal('toggle');
+        store.getAll();
       }else if(data.status == 200){
         Toast.ok('Folder updated');
-        document.location.href = '#/';
+        $('#formModal').modal('toggle');
+         store.getAll();
       } else {
         Toast.error('Unable to complete request');
       }
+      document.location.href = '#/';
     }
 
     detail(data){
       if(data.status == 200){
-        $('#name').val(data.data.name);
+        $('#folder_name').val(data.data.name);
+        $('#folder_id').val(data.data.id);
       }
 
     }
@@ -56,28 +52,27 @@ export default class extends React.Component {
       dataArray.forEach(function(data){
           form.append(data.name, data.value);
       });
-
-      if(this.props.params.id){
-         form.append('id', this.props.params.id);
+      var id = $('#folder_id').val();
+      if(id){
+         form.append('id', id);
       }
 
       this.setState({loaded:false});
-      var actionType = this.props.params.id ?  'UPDATE_FOLDER' :  'NEW_FOLDER';
+      var actionType = id ? 'UPDATE_FOLDER' :  'NEW_FOLDER';
       action.perform(form, actionType);
     }
 
     render() {
 
         return (
-         <div class="col-md-12">
-            <h3>New Folder</h3>
+          <div class="row">
             <form class="form-horizontal" method="post" onSubmit={ this.onSubmit.bind(this) } >
             <Loader loaded={this.state.loaded} top="73%" />
               <fieldset>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-10">
                   <label class="control-label">Folder Name</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="name" name="name" required />
+                    <input type="text" class="form-control" id="folder_name" name="name" required />
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="submit" disabled={!this.state.loaded}>Save</button>
                     </span>
@@ -85,7 +80,8 @@ export default class extends React.Component {
                 </div>
               </fieldset>
             </form>
-         </div>
+            <input type="hidden" class="form-control" id="folder_id" name="folder_id" />
+          </div>
         );
     }
 }

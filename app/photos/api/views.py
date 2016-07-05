@@ -84,7 +84,6 @@ class FolderApiView(ListCreateAPIView):
         queryset = Folder.objects.filter(user=self.request.user)
         return queryset
 
-
 class PhotoApiView(ListCreateAPIView):
 
     """
