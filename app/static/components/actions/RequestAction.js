@@ -17,7 +17,25 @@ export function ajaxPost(path, data, callback, errorCallback){
 
 }
 
+export function send(method, path, data, file, callback){
+    var req = request[method](path);
+    data['csrfmiddlewaretoken'] = $('#form-token input').val();
+    if(method == 'post' || method == 'put'){
+      req.send(data);
+    }
+    if(file){
+      req.attach(file.name, file)
+    }
+    req.set('xsrfCookieName', 'csrftoken');
+    req.set('xsrfHeaderName', 'X-CSRFToken');
+    req.set('X-CSRFToken', data['csrfmiddlewaretoken']);
+    req.set('Accept', 'application/json');
+    req.end(callback);
+}
+
 export function post(path, data, callback){
+    send('post', path, data, null, callback);
+    return;
     var req = request.post(path);
     data['csrfmiddlewaretoken'] = $('#form-token input').val();
     req.send(data);
