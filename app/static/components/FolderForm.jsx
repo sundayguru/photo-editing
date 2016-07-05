@@ -19,6 +19,7 @@ export default class extends React.Component {
 
     componentWillUnmount(){
       store.removeListener('newFolder', this.complete);
+      store.removeListener('singleFolder', this.complete);
     }
 
     complete(data){
