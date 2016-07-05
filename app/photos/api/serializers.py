@@ -6,6 +6,8 @@ from rest_framework.serializers import (
     SerializerMethodField,
 )
 
+from photos.models import *
+
 
 class UserSerializer(ModelSerializer):
 
@@ -30,27 +32,30 @@ class UserSerializer(ModelSerializer):
         user.save()
         return user
 
-class LoginSerializer(ModelSerializer):
+
+class FolderSerializer(ModelSerializer):
 
     class Meta:
-        model = User
+        model = Folder
         fields = [
-            'username',
-            'password',
+            'id',
+            'name',
+            'user',
+            'parent',
+            'date_created',
+            'date_modified',
         ]
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {'date_created': {'read_only': True}, 'date_modified': {'read_only': True}}
 
-    def create(self, validated_data):
-        username = validated_data.get('username')
-        password = validated_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return user
-            else:
-                return {}
-        else:
-            return {}
+class PhotoSerializer(ModelSerializer):
 
-        return user
+    class Meta:
+        model = Photo
+        fields = [
+            'id',
+            'image',
+            'user',
+            'date_created',
+            'date_modified',
+        ]
+        extra_kwargs = {'date_created': {'read_only': True}, 'date_modified': {'read_only': True}}

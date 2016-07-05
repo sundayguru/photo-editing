@@ -6,4 +6,8 @@ from .views import *
 urlpatterns = [
     url(r'^auth/register/$', RegistrationApiView.as_view(), name='register'),
     url(r'^auth/login/$', LoginApiView.as_view(), name='login'),
+    url(r'^folders/$', FolderApiView.as_view(), name='list-folder'),
+    url(r'^folders/$', FolderApiView.as_view(), name='list-folder'),
+    url(r'^photos/$', PhotoApiView.as_view(), name='list-photo'),
+    url(r'^folders/(?P<id>\d+)/$', SingleFolderAPIView.as_view(), name='folder-detail'),
 ]
