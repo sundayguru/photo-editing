@@ -25,12 +25,14 @@ export function send(method, path, data, file, callback){
       }
     }
     if(file){
-      req.attach(file.name, file)
+      req.attach('image', file)
     }
     req.set('xsrfCookieName', 'csrftoken');
     req.set('xsrfHeaderName', 'X-CSRFToken');
     req.set('X-CSRFToken', $('#form-token input').val());
-    req.set('Accept', 'application/json');
+    if(!file){
+      req.set('Accept', 'application/json');
+    }
     req.end(callback);
 }
 

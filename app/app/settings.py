@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
+import cloudinary
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -51,6 +51,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'photos',
 ]
+
+
+cloudinary.config(
+  cloud_name = "dfsbzqadc",
+  api_key = "927822459139272",
+  api_secret = "TjOmm1YYA1rU8JmK8be4LT_6ocg"
+)
 
 
 REST_FRAMEWORK = {
