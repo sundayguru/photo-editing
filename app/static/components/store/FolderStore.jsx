@@ -41,6 +41,10 @@ class FolderStore extends EventEmitter {
         });
     }
 
+    selected(id){
+        this.emit('selectFolder', {id: id});
+    }
+
 
     handlerAction(action){
         switch(action.type){

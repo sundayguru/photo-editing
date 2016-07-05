@@ -4,16 +4,14 @@ import * as action from './actions/GenericAction';
 import * as Toast from './actions/ToastAction';
 import loginStore from './store/LoginStore';
 
-
 export default class extends React.Component {
     constructor() {
       super();
-
     }
 
     componentWillMount(){
         this.state = {loaded:true};
-      loginStore.on('loginComplete', this.loginComplete.bind(this));
+        loginStore.on('loginComplete', this.loginComplete.bind(this));
     }
 
     componentWillUnmount(){

@@ -9,11 +9,15 @@ import Empty from './Empty';
 export default class extends React.Component {
     constructor() {
       super();
+
     }
 
     render() {
+      const {id} = this.props.params
+      $('#active-folder').val(id);
         return (
           <Empty />
         );
+
     }
 }
