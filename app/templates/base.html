@@ -16,7 +16,8 @@
 
 <body>
 <input type="hidden" name="index" id='index' value="{{index}}" />
-<input type="hidden" name="index" id='current-user' value="{{user}}" />
+<input type="hidden" name="active-folder" id='active-folder' value="0" />
+<input type="hidden" name="currentUser" id='current-user' value="{{user}}" />
  <p id="form-token">{% csrf_token %}</p>
  <div id = "app"></div>
 <script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>

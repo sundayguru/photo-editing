@@ -17,36 +17,8 @@ from rest_framework.permissions import (
     IsAuthenticated,
 )
 from .serializers import *
-
 from .permissions import IsOwner
-from rest_framework import status
-from rest_framework.decorators import api_view
 
-@api_view(['POST'])
-def login_view(request):
-    username = request.data.get('username', '')
-    password = request.data.get('password', '')
-    print request.data
-    user = authenticate(username=username, password=password)
-    print user
-    response_data = {}
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            response_data.update(
-                {'login':True, 'user': user}
-            )
-        else:
-            response_data.update(
-                {'login':False, 'message': 'User inactive'}
-            )
-    else:
-        response_data.update(
-            {'login':False, 'message': 'Invalid credentials'}
-        )
-
-    response_json = json.dumps(response_data)
-    return HttpResponse(response_json, content_type="application/json")
 
 class RegistrationApiView(CreateAPIView):
     queryset = User.objects.all()
@@ -81,3 +53,58 @@ class LoginApiView(View):
         response_json = json.dumps(response_data)
         return HttpResponse(response_json, content_type="application/json")
 
+
+
+class FolderApiView(ListCreateAPIView):
+
+    """
+    Returns list of folders if you are doing a GET request.
+    Creates new folder if you are doing a POST request.
+
+    Method: GET
+      Parameters:
+          page  (optional)    default=1
+
+      Response: JSON
+
+    Method: POST
+      Parameters:
+          name  (required)
+      Response: JSON
+    """
+
+    serializer_class = FolderSerializer
+    permission_classes = [IsAuthenticated]
+
+    # before create
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        queryset = Folder.objects.filter(user=self.request.user)
+        return queryset
+
+
+class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
+
+    """
+    Returns individual folder detail if you are doing a GET request.
+    Updates individual folder detail if you are doing a PUT request.
+    Deletes individual folder detail if you are doing a DELETE request.
+
+    Method: GET
+    Response: JSON
+
+    Method: PUT
+      Parameters:
+          name  (required)
+      Response: JSON
+
+    Method: DELETE
+        Response: JSON
+
+    """
+    queryset = Folder.objects.all()
+    serializer_class = FolderSerializer
+    permission_classes = [IsOwner]
+    lookup_field = 'id'
