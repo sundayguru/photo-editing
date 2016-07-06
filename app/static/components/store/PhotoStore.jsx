@@ -19,8 +19,8 @@ class PhotoStore extends EventEmitter {
 
     delete(id){
         var _this = this;
-        request.remove('/api/v1/folders/' + id + '/', (err, result) => {
-            _this.emit('deleteFolder', {status: result.status});
+        request.remove('/api/v1/photos/' + id + '/', (err, result) => {
+            _this.emit('deletePhoto', {status: result.status});
         });
     }
 
@@ -28,16 +28,15 @@ class PhotoStore extends EventEmitter {
         var _this = this;
         if(page == undefined)
             page = 1;
-
-        request.get('/api/v1/folders/?page=' + page, (err, result) => {
-            _this.emit('listFolder', {status: result.status, data: JSON.parse(result.text) });
+        request.get('/api/v1/photos/?page=' + page, (err, result) => {
+            _this.emit('photos', {status: result.status, data: JSON.parse(result.text) });
         });
     }
 
     get(id){
         var _this = this;
-        request.get('/api/v1/folders/' + id + '/', (err, result) => {
-            _this.emit('singleFolder', {status: result.status, data: JSON.parse(result.text) });
+        request.get('/api/v1/photos/' + id + '/', (err, result) => {
+            _this.emit('singlePhoto', {status: result.status, data: JSON.parse(result.text) });
         });
     }
 

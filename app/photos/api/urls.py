@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^folders/$', FolderApiView.as_view(), name='list-folder'),
     url(r'^photos/$', PhotoApiView.as_view(), name='list-photo'),
     url(r'^folders/(?P<id>\d+)/$', SingleFolderAPIView.as_view(), name='folder-detail'),
+    url(r'^photos/(?P<id>\d+)/$', SinglePhotoAPIView.as_view(), name='photo-detail'),
 ]

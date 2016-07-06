@@ -7,6 +7,7 @@ from rest_framework.serializers import (
 )
 
 from photos.models import *
+import cloudinary
 
 
 class UserSerializer(ModelSerializer):
@@ -45,17 +46,34 @@ class FolderSerializer(ModelSerializer):
             'date_created',
             'date_modified',
         ]
-        extra_kwargs = {'date_created': {'read_only': True}, 'date_modified': {'read_only': True}}
+        extra_kwargs = {'date_created': {'read_only': True},
+                        'date_modified': {'read_only': True}}
+
 
 class PhotoSerializer(ModelSerializer):
+    thumb = SerializerMethodField()
+    url = SerializerMethodField()
 
     class Meta:
         model = Photo
         fields = [
             'id',
             'image',
+            'thumb',
+            'url',
             'user',
             'date_created',
             'date_modified',
         ]
-        extra_kwargs = {'date_created': {'read_only': True}, 'date_modified': {'read_only': True}}
+        extra_kwargs = {'date_created': {'read_only': True},
+                        'date_modified': {'read_only': True}}
+
+    def get_thumb(self, obj):
+        return cloudinary.CloudinaryImage(obj.image.public_id).build_url(
+            width=300,
+            height=200,
+            crop='fill'
+        );
+
+    def get_url(self, obj):
+        return obj.image.url

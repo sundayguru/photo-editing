@@ -1,11 +1,16 @@
 import React from 'react';
 import storeFolder from './store/FolderStore';
+import storePhoto from './store/PhotoStore';
 
 export default class extends React.Component {
     toggleDetailModal(e){
         e.preventDefault();
         $('#myModal').modal();
-        storeFolder.get(this.id);
+        if(this.detailType == 'image'){
+            storePhoto.get(this.id);
+        }else{
+            storeFolder.get(this.id);
+        }
     }
 
     toggleFolderModal(e){
@@ -16,8 +21,9 @@ export default class extends React.Component {
     }
 
     render() {
-        const {editLink, deleteMethod, id} = this.props;
+        const {editLink, deleteMethod, id, type} = this.props;
         this.id = id;
+        this.detailType = type;
         return (
          <div class="options">
           <div class="btn-group">

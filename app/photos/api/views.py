@@ -137,3 +137,28 @@ class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = FolderSerializer
     permission_classes = [IsOwner]
     lookup_field = 'id'
+
+
+class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
+
+    """
+    Returns individual photo detail if you are doing a GET request.
+    Updates individual photo detail if you are doing a PUT request.
+    Deletes individual photo detail if you are doing a DELETE request.
+
+    Method: GET
+    Response: JSON
+
+    Method: PUT
+      Parameters:
+          title  (required)
+      Response: JSON
+
+    Method: DELETE
+        Response: JSON
+
+    """
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    permission_classes = [IsOwner]
+    lookup_field = 'id'

@@ -1,10 +1,40 @@
 import React from 'react';
+import storePhoto from './store/PhotoStore';
+import Loader from 'react-loader';
+import * as Toast from './actions/ToastAction';
 
 export default class extends React.Component {
     constructor() {
       super();
-
+      this.updateComplete = this.updateComplete.bind(this);
+      this.detail = this.detail.bind(this);
     }
+
+    componentWillMount(){
+      this.state = {loaded: false, file:{}};
+      const {id} = this.props.params;
+      storePhoto.get(id);
+      storePhoto.on('updatePhoto', this.updateComplete);
+      storePhoto.on('singlePhoto', this.detail);
+    }
+
+    componentWillUnmount(){
+      storePhoto.removeListener('updatePhoto', this.updateComplete);
+      storePhoto.removeListener('singlePhoto', this.detail);
+    }
+
+    detail(result){
+      if(result.status == 200){
+        this.setState({file:result.data, loaded:true});
+        console.log(result.data);
+        $('#title').val(result.data.image);
+      }
+    }
+
+    updateComplete(result){
+      console.log(result);
+    }
+
     handleChange(e) {
       console.log(e.target.value);
     }
@@ -12,21 +42,19 @@ export default class extends React.Component {
     render() {
         return (
          <div class="col-md-12">
-            <h3>Image Preview</h3>
+
+            <h3>Image Preview <Loader loaded={this.state.loaded} top="7%" left="25%" /></h3>
             <form class="form-horizontal">
               <fieldset>
                 <div class="col-md-7 no-pad-left">
                   <div class="image-preview">
-                    <img src="../static/images/slides/1.jpg" alt="..." class="img-responsive"/>
-                  </div>
-                  <div class="progress progress-striped active">
-                    <div class="progress-bar" style={{width:"50%"}}></div>
+                    <img src={this.state.file.url} alt="..." class="img-responsive"/>
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
                     <label class="control-label" for="title">Title</label>
-                    <input type="text" class="form-control" id="title"  />
+                    <input type="text" class="form-control" id="title" defaultValue={this.state.file.image} />
                   </div>
                   <div class="row">
                   <div class="col-md-6 no-pad">
