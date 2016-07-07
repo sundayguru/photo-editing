@@ -50,16 +50,34 @@ class FolderSerializer(ModelSerializer):
                         'date_modified': {'read_only': True}}
 
 
+class PhotoDetailSerializer(ModelSerializer):
+
+    class Meta:
+        model = PhotoDetail
+        fields = [
+            'id',
+            'title',
+            'effects',
+            'date_created',
+            'date_modified',
+        ]
+        extra_kwargs = {'date_created': {'read_only': True},
+                        'date_modified': {'read_only': True}}
+
+
 class PhotoSerializer(ModelSerializer):
     thumb = SerializerMethodField()
     url = SerializerMethodField()
+    detail = SerializerMethodField()
 
     class Meta:
         model = Photo
         fields = [
             'id',
             'image',
+            'folder',
             'thumb',
+            'detail',
             'url',
             'user',
             'date_created',
@@ -77,3 +95,10 @@ class PhotoSerializer(ModelSerializer):
 
     def get_url(self, obj):
         return obj.image.url
+
+    def get_detail(self, obj):
+        detail = PhotoDetail.objects.filter(photo=obj).first()
+        if(not detail):
+            return {};
+        serializer = PhotoDetailSerializer(detail)
+        return serializer.data

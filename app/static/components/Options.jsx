@@ -24,15 +24,22 @@ export default class extends React.Component {
         const {editLink, deleteMethod, id, type} = this.props;
         this.id = id;
         this.detailType = type;
+        var editList =  <li>
+                            <a href={"#/"+editLink} onClick={ this.toggleFolderModal.bind(this) } >
+                            <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
+                        </li>;
+        if(type == 'image'){
+            editList =  <li>
+                            <a href={"#/"+editLink}>
+                            <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
+                        </li>;
+        }
         return (
          <div class="options">
           <div class="btn-group">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown-menu-left">
-                    <li>
-                        <a href={"#/"+editLink} onClick={ this.toggleFolderModal.bind(this) } >
-                            <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
-                    </li>
+                    {editList}
                     <li>
                         <a href="#" onClick={deleteMethod}>
                             <img src="../static/images/icons/delete-file.png" class="icon-size-small" /> Delete</a>

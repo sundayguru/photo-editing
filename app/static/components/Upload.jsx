@@ -59,14 +59,14 @@ export default class extends React.Component {
     render() {
         return (
           <div>
-            <Loader loaded={this.state.loaded} top="73%" />
-           <div class="col-md-12 upload">
-            <p>Upload folder: <small> {this.state.folder} </small></p>
-            <Dropzone onDrop={this.onDrop} accept="image/*" multiple={false}>
-              <div>Drag and drop an image here, or click to select image to upload.</div>
-            </Dropzone>
+              <Loader loaded={this.state.loaded} top="73%" />
+             <div class="col-md-12 upload">
+              <p>Upload folder: <small> {this.state.folder} </small></p>
+              <Dropzone onDrop={this.onDrop} accept="image/*" multiple={false}>
+                <div>Drag and drop an image here, or click to select image to upload.</div>
+              </Dropzone>
+            </div>
           </div>
-        </div>
 
         );
     }

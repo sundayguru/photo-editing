@@ -12,8 +12,8 @@ class PhotoStore extends EventEmitter {
 
     update(content){
         var _this = this;
-        request.put('/api/v1/folders/' + content.get('id') + '/', content, (err, result) => {
-            _this.emit('newFolder', {status: result.status, data: JSON.parse(result.text) });
+        request.put('/api/v1/photos/' + content.get('photo_id') + '/detail/' + content.get('id') + '/', content, (err, result) => {
+            _this.emit('updatePhoto', {status: result.status, data: JSON.parse(result.text) });
         });
     }
 

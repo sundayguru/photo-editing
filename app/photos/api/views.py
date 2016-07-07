@@ -107,7 +107,10 @@ class PhotoApiView(ListCreateAPIView):
 
     # before create
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        instance = serializer.save(user=self.request.user)
+        detail = PhotoDetail(title="", photo=instance)
+        detail.save()
+
 
     def get_queryset(self):
         queryset = Photo.objects.filter(user=self.request.user)
@@ -139,6 +142,7 @@ class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
+
 class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
 
     """
@@ -162,3 +166,32 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PhotoSerializer
     permission_classes = [IsOwner]
     lookup_field = 'id'
+
+
+class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
+
+    """
+    Returns individual photo detail if you are doing a GET request.
+    Updates individual photo detail if you are doing a PUT request.
+    Deletes individual photo detail if you are doing a DELETE request.
+
+    Method: GET
+    Response: JSON
+
+    Method: PUT
+      Parameters:
+          title  (required)
+      Response: JSON
+
+    Method: DELETE
+        Response: JSON
+
+    """
+    serializer_class = PhotoDetailSerializer
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()
+        return PhotoDetail.objects.filter(photo=photo)
+
+

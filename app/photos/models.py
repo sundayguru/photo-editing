@@ -23,9 +23,22 @@ class Folder(models.Model):
     def __repr__(self):
         return '<Folder %r>' % self.name
 
+
 class Photo(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+    folder = models.ForeignKey(Folder, default=0)
     image = CloudinaryField('image')
+    date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+    date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_created']
+
+
+class PhotoDetail(models.Model):
+    photo = models.ForeignKey(Photo, default=0)
+    title = models.CharField(max_length=100)
+    effects = models.TextField()
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
