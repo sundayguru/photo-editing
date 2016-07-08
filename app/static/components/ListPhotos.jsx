@@ -7,25 +7,19 @@ import ReactPaginate from 'react-paginate';
 import PhotoThumb from './PhotoThumb';
 
 export default class extends React.Component {
-    constructor() {
-      super();
-      this.listPhotos = this.listPhotos.bind(this);
-    }
 
     getNext(data){
         var page = data.selected + 1;
-        store.getAll(page, this.state.folder_id);
+        store.getAll(page);
     }
 
     componentWillMount(){
-      const {folder_id} = this.props;
       this.state = {
         loaded:false,
-        photos:[],
-        folder_id: folder_id ? folder_id : 0
+        photos:[]
       }
       store.on('photos', this.listPhotos);
-      store.getAll(1, folder_id);
+      store.getAll();
     }
 
     componentWillUnmount(){

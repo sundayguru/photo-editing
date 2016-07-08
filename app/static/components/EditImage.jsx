@@ -12,7 +12,7 @@ export default class extends React.Component {
     }
 
     componentWillMount(){
-      this.state = {loaded: false, file:{}, effects:[]};
+      this.state = {loaded: false, file:{}, effects:{}};
       const {id} = this.props.params;
       this.id = id;
       storePhoto.get(id);
@@ -26,10 +26,11 @@ export default class extends React.Component {
     }
 
     detail(result){
-      //console.log(result)
       if(result.status == 200){
-        this.setState({file:result.data, loaded:true});
-        $('#title').val(result.data.detail.title);
+        var title = result.data.detail ? result.data.detail.title : ''
+        var effects = result.data.detail.effects ? this.decodeEffects(result.data.detail.effects) : {};
+        this.setState({file: result.data, loaded: true, effects: effects});
+        $('#title').val(title);
       }
     }
 
@@ -49,34 +50,39 @@ export default class extends React.Component {
 
     addEffect(name, value){
       var effects = this.state.effects;
-      effects.push({name:name, value:value});
+      effects[name] = value;
       this.setState({effects: effects});
     }
 
     removeEffect(name){
       var effects = this.state.effects;
-      effects.forEach(function(item, index){
-        if(item.name == name){
-          effects.splice(index, 1);
-        }
-      });
-
+      delete effects[name];
+      this.setState({effects: effects});
     }
 
     updateEffect(name, value){
       var effects = this.state.effects;
-      effects.forEach(function(item, index){
-        if(item.name == name){
-          effects[index].value = value;
-        }
-      });
+      effects[name] = value;
       this.setState({effects: effects});
     }
 
     getEffects(){
       var effects = '';
-      this.state.effects.forEach(function(item){
-        effects += item.name + ':' + item.value + ',';
+      for(name in this.state.effects){
+        effects += name + ':' + this.state.effects[name] + '/';
+      }
+      return effects;
+    }
+
+    decodeEffects(effectString){
+      var effects = {};
+      var args = effectString.split('/');
+      args.forEach(function(singleEffect){
+        if(singleEffect){
+          var e = singleEffect.split(':');
+          effects[e[0]] = e[1];
+          $('#' + e[0]).val(e[1]);
+        }
       });
       return effects;
     }
@@ -105,7 +111,8 @@ export default class extends React.Component {
       e.preventDefault();
       var form = new FormData();
       form.append('photo_id', this.id);
-      form.append('id', this.state.file.detail.id);
+      form.append('id', this.state.file.detail.id ? this.state.file.detail.id : 0);
+      form.append('effects', this.getEffects());
       form.append('title', $('#title').val());
       storePhoto.update(form);
     }
@@ -113,7 +120,6 @@ export default class extends React.Component {
 
 
     render() {
-      console.log(this.state.effects);
         return (
          <div class="col-md-12">
             <h3>Image Preview <Loader loaded={this.state.loaded} top="7%" left="25%" /></h3>
@@ -130,7 +136,7 @@ export default class extends React.Component {
                     <input type="text" class="form-control" id="title" defaultValue={this.state.file.image} />
                   </div>
                   <div class="col-md-12">
-                    <Effects change={this.handleChange.bind(this)} check={this.handleCheck.bind(this)} />
+                    <Effects change={this.handleChange.bind(this)} check={this.handleCheck.bind(this)} effects={this.state.effects} />
                   </div>
 
                   <div class="form-group">

@@ -10,14 +10,15 @@ import ReactPaginate from 'react-paginate';
 export default class extends React.Component {
     constructor() {
       super();
-      this.state = {
-        loaded:false,
-        folders:[]
-      }
+
       this.complete = this.complete.bind(this);
     }
 
     componentWillMount(){
+      this.state = {
+        loaded:false,
+        folders:[]
+      }
       store.on('listFolder', this.complete);
       store.getAll();
     }

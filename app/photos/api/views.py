@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-import json
+import json, cloudinary
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
@@ -107,13 +107,27 @@ class PhotoApiView(ListCreateAPIView):
 
     # before create
     def perform_create(self, serializer):
-        instance = serializer.save(user=self.request.user)
-        detail = PhotoDetail(title="", photo=instance)
+        folder_id = self.request.POST.get('folder_id', 0)
+        folder = Folder.objects.filter(user=self.request.user, id=folder_id).first()
+        if folder is not None:
+            instance = serializer.save(user=self.request.user, folder=folder)
+        else:
+            instance = serializer.save(user=self.request.user)
+
+        detail = PhotoDetail(photo=instance)
         detail.save()
 
 
+
     def get_queryset(self):
-        queryset = Photo.objects.filter(user=self.request.user)
+        folder_id = self.kwargs.get('id', -1)
+        if int(folder_id) == 0:
+            return Photo.objects.filter(user=self.request.user, folder=0)
+        folder = Folder.objects.filter(id=folder_id)
+        if(folder):
+            queryset = Photo.objects.filter(user=self.request.user, folder=folder)
+        else:
+            queryset = Photo.objects.filter(user=self.request.user)
         return queryset
 
 
@@ -167,6 +181,10 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwner]
     lookup_field = 'id'
 
+    def perform_destroy(self, instance):
+        cloudinary.api.delete_resources([instance.image.public_id])
+        instance.delete()
+
 
 class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
 
@@ -193,5 +211,3 @@ class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()
         return PhotoDetail.objects.filter(photo=photo)
-
-

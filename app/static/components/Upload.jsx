@@ -13,16 +13,18 @@ export default class extends React.Component {
       this.detail = this.detail.bind(this);
       this.uploadComplete = this.uploadComplete.bind(this);
       this.onDrop = this.onDrop.bind(this);
-      var activeFolderId = $('#active-folder').val();
-      if(activeFolderId > 0){
-        storeFolder.get(activeFolderId);
-      }
+
     }
 
     componentWillMount(){
-      this.state = {folder:'No folder selected', loaded: true};
+
       storeFolder.on('singleFolder', this.detail);
       storePhoto.on('newPhoto', this.uploadComplete);
+      var activeFolderId = this.props.params.id;
+      if(activeFolderId > 0){
+        storeFolder.get(activeFolderId);
+      }
+      this.state = {folder:'No folder selected', loaded: true, activeFolderId: activeFolderId};
     }
 
     componentWillUnmount(){
@@ -49,7 +51,7 @@ export default class extends React.Component {
 
     onDrop(files) {
       this.setState({loaded: false});
-      var folder_id = $('#active-folder').val();
+      var folder_id = this.state.activeFolderId;
       var formData = new FormData();
       formData.append('folder_id', folder_id);
       formData.append('image', files[0]);

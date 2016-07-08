@@ -24,11 +24,15 @@ class PhotoStore extends EventEmitter {
         });
     }
 
-    getAll(page){
+    getAll(page, folder_id){
         var _this = this;
         if(page == undefined)
             page = 1;
-        request.get('/api/v1/photos/?page=' + page, (err, result) => {
+        var url = '/api/v1/photos/?page=' + page;
+        if(folder_id !== undefined){
+            var url = '/api/v1/folders/' + folder_id + '/photos/?page=' + page;
+        }
+        request.get(url, (err, result) => {
             _this.emit('photos', {status: result.status, data: JSON.parse(result.text) });
         });
     }

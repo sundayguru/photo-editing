@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class extends React.Component {
   render() {
-      const {change, check} = this.props;
+      const {change, check, effects} = this.props;
       return (
         <div class="row">
             <ul class="nav nav-tabs">
@@ -24,27 +24,35 @@ export default class extends React.Component {
               <div class="tab-pane fade active in" id="appearance">
 
                   <div class="form-group">
+                    <label class="control-label w100" for="e_hue">
+                      <span class="left">Hue </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="e_hue" checked={effects.e_hue} /></span>
+                    </label>
+                    <input type="range" id="e_hue" onChange={change} disabled={!effects.e_hue} />
+                  </div>
+
+                  <div class="form-group">
                     <label class="control-label w100" for="e_brightness">
                       <span class="left">Brightness </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_brightness" /></span>
+                      <span class="right"><input type="checkbox" onChange={check} value="e_brightness" checked={effects.e_brightness} /></span>
                     </label>
-                    <input type="range" id="e_brightness" defaultValue={0} onChange={change} disabled={true}/>
+                    <input type="range" id="e_brightness" onChange={change} disabled={!effects.e_brightness} />
                   </div>
 
                   <div class="form-group">
                     <label class="control-label w100" for="e_contrast">
                       <span class="left">Contrast </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_contrast" /></span>
+                      <span class="right"><input type="checkbox" onChange={check} value="e_contrast" checked={effects.e_contrast} /></span>
                     </label>
-                    <input type="range" id="e_contrast" defaultValue={50} onChange={change} disabled={true}/>
+                    <input type="range" id="e_contrast" onChange={change} disabled={!effects.e_contrast} />
                   </div>
 
                   <div class="form-group">
                   <label class="control-label w100" for="e_saturation">
                       <span class="left">Saturation </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_saturation" /></span>
+                      <span class="right"><input type="checkbox" onChange={check} value="e_saturation" checked={effects.e_saturation} /></span>
                     </label>
-                    <input type="range" id="e_saturation" defaultValue={0} onChange={change} />
+                    <input type="range" id="e_saturation" onChange={change}  disabled={!effects.e_saturation} />
                   </div>
 
               </div>

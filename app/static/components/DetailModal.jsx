@@ -19,7 +19,7 @@ export default class extends React.Component {
 
     photoDetail(data){
       this.infoElement = <PhotoInfo data={data.data} />;
-      this.setState({title: data.data.image});
+      this.setState({title: data.data.folder_name + ' - ' + data.data.detail.title});
     }
 
     componentWillMount(){

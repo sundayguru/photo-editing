@@ -40,6 +40,13 @@ export default class extends React.Component {
 
   }
 
+  getEffectUrl(url, effects){
+    if(url === undefined || !effects)
+      return url
+    var paths = url.split('upload');
+    return paths[0] + 'upload/' + effects + paths[1];
+  }
+
   componentDidMount(){
       $('.preview').magnificPopup({
         type: 'image',
@@ -61,17 +68,17 @@ export default class extends React.Component {
 
 
   render() {
-      var {url, thumb, id} = this.props;
+      var {url, thumb, id, detail} = this.props;
       this.id = id;
       return (
          <div class="col-sm-4 col-md-3">
             <Loader loaded={this.state.loaded} />
             <div class="thumbnail">
             <Options editLink={ "editimage/" + id } deleteMethod={this.deleteImage.bind(this)} id={id} type={"image"} />
-            <a href={url} class="preview" title="test image">
-              <img src={thumb} alt="..." /> </a>
+            <a href={this.getEffectUrl(url, detail.effects)} class="preview" title={detail.title} >
+              <img src={this.getEffectUrl(thumb, detail.effects)} alt="..." /> </a>
               <div class="caption">
-                <h5>Campaign for beauty</h5>
+                <h5>{detail.title}</h5>
               </div>
             </div>
           </div>

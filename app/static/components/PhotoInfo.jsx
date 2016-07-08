@@ -14,6 +14,7 @@ export default class extends React.Component {
       return (
       <table class="table table-striped table-hover">
         <tbody>
+          <ModalTableRow column="Folder Name" value={data.folder_name} />
           <ModalTableRow column="Created Datetime" value={this.niceDatetime(data.date_created)} />
           <ModalTableRow column="Last Modified" value={this.niceDatetime(data.date_modified)} />
         </tbody>
