@@ -33,7 +33,8 @@ export default class extends React.Component {
     this.setState({loaded:true});
     if(data.status == 204){
       Toast.ok('Photo deleted');
-      store.getAll();
+      var {folder_id} = this.props;
+      store.getAll(1, folder_id);
     }else{
       Toast.error('Unable to complete request');
     }

@@ -19,6 +19,9 @@ export default class extends React.Component {
 
     componentWillMount(){
       const {folder_id} = this.props;
+      if(folder_id === undefined){
+        $('#active-folder').val(0);
+      }
       this.state = {
         loaded:false,
         photos:[],
@@ -45,7 +48,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const photos = this.state.photos.map((item) => { return <PhotoThumb key={item.id} {...item}/> });
+        const photos = this.state.photos.map((item) => { return <PhotoThumb key={item.id} folder_id={this.state.folder_id} {...item}/> });
         if(!photos.length){
           return (
             <Empty title="No image found" />
