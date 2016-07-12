@@ -17,6 +17,13 @@ class PhotoStore extends EventEmitter {
         });
     }
 
+    preview(content){
+        var _this = this;
+        request.post('/api/v1/photos/' + content.get('photo_id') + '/preview/', content, (err, result) => {
+            _this.emit('previewPhoto', {status: result.status, data: JSON.parse(result.text) });
+        });
+    }
+
     delete(id){
         var _this = this;
         request.remove('/api/v1/photos/' + id + '/', (err, result) => {

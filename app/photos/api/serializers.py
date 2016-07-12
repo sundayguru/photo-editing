@@ -42,7 +42,6 @@ class FolderSerializer(ModelSerializer):
             'id',
             'name',
             'user',
-            'parent',
             'photos',
             'date_created',
             'date_modified',
@@ -76,8 +75,6 @@ class PhotoDetailSerializer(ModelSerializer):
 
 
 class PhotoSerializer(ModelSerializer):
-    thumb = SerializerMethodField()
-    url = SerializerMethodField()
     detail = SerializerMethodField()
     folder_name = SerializerMethodField()
 
@@ -87,9 +84,7 @@ class PhotoSerializer(ModelSerializer):
             'id',
             'image',
             'folder_name',
-            'thumb',
             'detail',
-            'url',
             'user',
             'date_created',
             'date_modified',
@@ -97,15 +92,6 @@ class PhotoSerializer(ModelSerializer):
         extra_kwargs = {'date_created': {'read_only': True},
                         'date_modified': {'read_only': True}}
 
-    def get_thumb(self, obj):
-        return cloudinary.CloudinaryImage(obj.image.public_id).build_url(
-            width=300,
-            height=200,
-            crop='fill'
-        );
-
-    def get_url(self, obj):
-        return obj.image.url
 
     def get_folder_name(self, obj):
         try:

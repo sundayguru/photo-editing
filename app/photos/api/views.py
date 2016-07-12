@@ -18,6 +18,7 @@ from rest_framework.permissions import (
 )
 from .serializers import *
 from .permissions import IsOwner
+from image_edit import *
 
 
 class RegistrationApiView(CreateAPIView):
@@ -28,12 +29,9 @@ class RegistrationApiView(CreateAPIView):
 
 class LoginApiView(View):
     def post(self, request, *args, **kwargs):
-
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        print username, password
         user = authenticate(username=username, password=password)
-        print user
         response_data = {}
         if user is not None:
             if user.is_active:
@@ -52,6 +50,35 @@ class LoginApiView(View):
 
         response_json = json.dumps(response_data)
         return HttpResponse(response_json, content_type="application/json")
+
+
+class PhotoPreview(View):
+    def post(self, request, *args, **kwargs):
+        photo_id = request.POST.get('photo_id', 0)
+        effects = request.POST.get('effects', '')
+        effect_obj = json.loads(effects)
+        photo = Photo.objects.filter(id=photo_id).first()
+        response_data = {'image':''}
+        if photo:
+            image_editor = ImageEdit(photo.image.path)
+            for effect_type in effect_obj:
+                effect_data = effect_obj[effect_type]
+                if(effect_data):
+                    editor_method = getattr(self, effect_type)
+                    if editor_method:
+                        editor_method(image_editor, effect_data)
+            response_data = {'image':image_editor.preview()}
+        response_json = json.dumps(response_data)
+        return HttpResponse(response_json, content_type="application/json")
+
+    def enhance(self, image_editor, effect_data):
+        for effect_data_type in effect_data:
+            image_editor.enhance(effect_data_type, float(effect_data[effect_data_type]))
+
+    def filter(self, image_editor, effect_data):
+        for effect_data_type in effect_data:
+            image_editor.filter(effect_data_type)
+
 
 
 

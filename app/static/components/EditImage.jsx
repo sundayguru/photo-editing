@@ -8,27 +8,31 @@ export default class extends React.Component {
     constructor() {
       super();
       this.updateComplete = this.updateComplete.bind(this);
+      this.previewComplete = this.previewComplete.bind(this);
       this.detail = this.detail.bind(this);
+      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}};
     }
 
     componentWillMount(){
-      this.state = {loaded: false, file:{}, effects:{}};
+      this.state = {loaded: false, file:{}, effects:this.defaultEffects};
       const {id} = this.props.params;
       this.id = id;
       storePhoto.get(id);
       storePhoto.on('updatePhoto', this.updateComplete);
+      storePhoto.on('previewPhoto', this.previewComplete);
       storePhoto.on('singlePhoto', this.detail);
     }
 
     componentWillUnmount(){
       storePhoto.removeListener('updatePhoto', this.updateComplete);
+      storePhoto.removeListener('previewPhoto', this.previewComplete);
       storePhoto.removeListener('singlePhoto', this.detail);
     }
 
     detail(result){
       if(result.status == 200){
         var title = result.data.detail ? result.data.detail.title : ''
-        var effects = result.data.detail.effects ? this.decodeEffects(result.data.detail.effects) : {};
+        var effects = result.data.detail.effects ? this.decodeEffects(result.data.detail.effects) : this.defaultEffects;
         this.setState({file: result.data, loaded: true, effects: effects});
         $('#title').val(title);
       }
@@ -42,36 +46,44 @@ export default class extends React.Component {
       }
     }
 
+    previewComplete(result){
+      this.setState({loaded:true});
+      console.log(result);
+      $('.image-preview img').attr('src', 'data:image/jpeg;base64, ' + result.data.image)
+    }
+
     handleChange(e) {
       var name = e.target.getAttribute('id');
       var value = e.target.value;
-      this.updateEffect(name, value);
+      var type = $(e.target).attr('data-type');
+      this.updateEffect(type, name, value);
     }
 
-    addEffect(name, value){
+    addEffect(type, name, value){
       var effects = this.state.effects;
-      effects[name] = value;
+      effects[type][name] = value;
       this.setState({effects: effects});
+      this.getEffectPreview();
     }
 
-    removeEffect(name){
+    removeEffect(type, name){
       var effects = this.state.effects;
-      delete effects[name];
+      delete effects[type][name];
       this.setState({effects: effects});
+      this.getEffectPreview();
     }
 
-    updateEffect(name, value){
+    updateEffect(type, name, value){
       var effects = this.state.effects;
-      effects[name] = value;
+      effects[type][name] = value;
       this.setState({effects: effects});
+      this.getEffectPreview();
     }
 
-    getEffects(){
-      var effects = '';
-      for(name in this.state.effects){
-        effects += name + ':' + this.state.effects[name] + '/';
-      }
-      return effects;
+    getEffectPreview(){
+      this.setState({loaded:false});
+      var form = this.getFormData();
+      storePhoto.preview(form);
     }
 
     decodeEffects(effectString){
@@ -87,47 +99,43 @@ export default class extends React.Component {
       return effects;
     }
 
-    getEffectUrl(url){
-      if(url === undefined)
-        return
-
-      var paths = url.split('upload');
-      return paths[0] + 'upload/' + this.getEffects() + paths[1];
-    }
-
-
     handleCheck(e) {
+      var type = $('#' + e.target.value).attr('data-type');
       if(e.target.checked){
         $('#' + e.target.value).attr('disabled', false);
         var value = $('#' + e.target.value).val();
-        this.addEffect(e.target.value, value);
+        this.addEffect(type, e.target.value, value);
       }else{
         $('#' + e.target.value).attr('disabled', true);
-        this.removeEffect(e.target.value);
+        this.removeEffect(type, e.target.value);
       }
+    }
+
+    getFormData(){
+      var form = new FormData();
+      form.append('photo_id', this.id);
+      form.append('id', this.state.file.detail.id ? this.state.file.detail.id : 0);
+      form.append('effects', JSON.stringify(this.state.effects));
+      form.append('title', $('#title').val());
+      return form;
     }
 
     onSubmit(e) {
       e.preventDefault();
-      var form = new FormData();
-      form.append('photo_id', this.id);
-      form.append('id', this.state.file.detail.id ? this.state.file.detail.id : 0);
-      form.append('effects', this.getEffects());
-      form.append('title', $('#title').val());
+      var form = this.getFormData();
       storePhoto.update(form);
     }
-
-
 
     render() {
         return (
          <div class="col-md-12">
-            <h3>Image Preview <Loader loaded={this.state.loaded} top="7%" left="25%" /></h3>
+            <h3>Image Preview </h3>
             <form class="form-horizontal" method="post" onSubmit={this.onSubmit.bind(this)}>
               <fieldset>
                 <div class="col-md-6 no-pad-left">
                   <div class="image-preview">
-                    <img src={this.getEffectUrl(this.state.file.url)} alt="..." class="img-responsive"/>
+                    <Loader loaded={this.state.loaded} top="50%" left="50%" />
+                    <img src={this.state.file.image} alt="..." class="img-responsive" />
                   </div>
                 </div>
                 <div class="col-md-6">

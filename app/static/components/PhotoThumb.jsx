@@ -69,17 +69,17 @@ export default class extends React.Component {
 
 
   render() {
-      var {url, thumb, id, detail} = this.props;
+      var {url, image, id, detail} = this.props;
       this.id = id;
       return (
          <div class="col-sm-4 col-md-3">
             <Loader loaded={this.state.loaded} />
             <div class="thumbnail">
             <Options editLink={ "editimage/" + id } deleteMethod={this.deleteImage.bind(this)} id={id} type={"image"} />
-            <a href={this.getEffectUrl(url, detail.effects)} class="preview" title={detail.title} >
-              <img src={this.getEffectUrl(thumb, detail.effects)} alt="..." /> </a>
+            <a href={image} class="preview" title={detail.title} >
+              <img src={image} alt={detail.title} /> </a>
               <div class="caption">
-                <h5>{detail.title}</h5>
+                <h5>{detail.title.length ? detail.title : 'Untiltled'}</h5>
               </div>
             </div>
           </div>

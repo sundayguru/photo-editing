@@ -21,7 +21,7 @@ export default class extends React.Component {
     loginComplete(data){
       this.setState({loaded:true});
       if(!data.data.login){
-        Toast.error(data.message);
+        Toast.error(data.data.message);
       }else{
         Toast.ok('Login Successful');
         document.location.href = '/';

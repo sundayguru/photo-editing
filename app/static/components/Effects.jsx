@@ -6,65 +6,146 @@ export default class extends React.Component {
       return (
         <div class="row">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#appearance" data-toggle="tab" aria-expanded="false">Appearance</a></li>
-              <li class=""><a href="/#adjustment" data-toggle="tab" aria-expanded="false">Adjustment</a></li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                  More Effects <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="active"><a href="#" data-toggle="tab" aria-expanded="true">Tranform</a></li>
-                  <li class="active"><a href="#" data-toggle="tab" aria-expanded="true">Overlay</a></li>
-                  <li class="divider"></li>
-                  <li class=""><a href="#" data-toggle="tab" aria-expanded="false">Options</a></li>
-                </ul>
-              </li>
+              <li class="active"><a href="#enhance" data-toggle="tab" aria-expanded="false">Enhance</a></li>
+              <li class=""><a href="/#filter" data-toggle="tab" aria-expanded="false">Filter</a></li>
+              <li class=""><a href="/#transform" data-toggle="tab" aria-expanded="false">Tranform</a></li>
+              <li class=""><a href="/#overlay" data-toggle="tab" aria-expanded="false">Overlay</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade active in" id="appearance">
-
+              <div class="tab-pane fade active in" id="enhance">
                   <div class="form-group">
-                    <label class="control-label w100" for="e_hue">
-                      <span class="left">Hue </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_hue" checked={effects.e_hue} /></span>
+                    <label class="control-label w100" for="Brightness">
+                      <span class="left">Brightness{ effects.enhance.Brightness ? "(" + effects.enhance.Brightness + "%)" : "" } </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="Brightness" checked={effects.enhance.Brightness} /></span>
                     </label>
-                    <input type="range" id="e_hue" onChange={change} disabled={!effects.e_hue} />
+                    <input type="range" id="Brightness" onChange={change} disabled={!effects.enhance.Brightness} data-type="enhance" />
                   </div>
 
                   <div class="form-group">
-                    <label class="control-label w100" for="e_brightness">
-                      <span class="left">Brightness </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_brightness" checked={effects.e_brightness} /></span>
+                    <label class="control-label w100" for="Contrast">
+                      <span class="left">Contrast{ effects.enhance.Contrast ? "(" + effects.enhance.Contrast + "%)" : "" }  </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="Contrast" checked={effects.enhance.Contrast} /></span>
                     </label>
-                    <input type="range" id="e_brightness" onChange={change} disabled={!effects.e_brightness} />
+                    <input type="range" id="Contrast" onChange={change} disabled={!effects.enhance.Contrast} data-type="enhance" />
                   </div>
 
                   <div class="form-group">
-                    <label class="control-label w100" for="e_contrast">
-                      <span class="left">Contrast </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_contrast" checked={effects.e_contrast} /></span>
+                    <label class="control-label w100" for="Color">
+                      <span class="left">Color{ effects.enhance.Color ? "(" + effects.enhance.Color + "%)" : "" }  </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="Color" checked={effects.enhance.Color} /></span>
                     </label>
-                    <input type="range" id="e_contrast" onChange={change} disabled={!effects.e_contrast} />
+                    <input type="range" id="Color" onChange={change} disabled={!effects.enhance.Color} data-type="enhance" />
                   </div>
 
                   <div class="form-group">
-                  <label class="control-label w100" for="e_saturation">
-                      <span class="left">Saturation </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="e_saturation" checked={effects.e_saturation} /></span>
+                    <label class="control-label w100" for="Sharpness">
+                      <span class="left">Sharpness{ effects.enhance.Sharpness ? "(" + effects.enhance.Sharpness + "%)" : "" }  </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="Sharpness" checked={effects.enhance.Sharpness} /></span>
                     </label>
-                    <input type="range" id="e_saturation" onChange={change}  disabled={!effects.e_saturation} />
+                    <input type="range" id="Sharpness" onChange={change} disabled={!effects.enhance.Sharpness} data-type="enhance" />
                   </div>
 
               </div>
-              <div class="tab-pane fade " id="adjustment">
-                <p>Food truck fixie locavore, accusamus mcsweeneys marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+              <div class="tab-pane fade " id="filter">
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="blur">
+                      <span class="left">Blur </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="blur" checked={effects.filter.blur} /></span>
+                    </label>
+                    <input type="hidden" id="blur" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="contour">
+                      <span class="left">Contour </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="contour" checked={effects.filter.contour} /></span>
+                    </label>
+                    <input type="hidden" id="contour" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="detail">
+                      <span class="left">Detail </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="detail" checked={effects.filter.detail} /></span>
+                    </label>
+                    <input type="hidden" id="detail" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="edge_enhance">
+                      <span class="left">Edge Enhance </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="edge_enhance" checked={effects.filter.edge_enhance} /></span>
+                    </label>
+                    <input type="hidden" id="edge_enhance" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="edge_enhance_more">
+                      <span class="left">Edge Enhance More </span>
+                      <span class="right"><input type="checkbox" onChange={check} value="edge_enhance_more" checked={effects.filter.edge_enhance_more} /></span>
+                    </label>
+                    <input type="hidden" id="edge_enhance_more" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="emboss">
+                      <span class="left">Emboss </span>
+                      <span class="right">
+                      <input type="checkbox" onChange={check} value="emboss" checked={effects.filter.emboss} />
+                      </span>
+                    </label>
+                    <input type="hidden" id="emboss" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="find_edges">
+                      <span class="left">Find Edges </span>
+                      <span class="right">
+                      <input type="checkbox" onChange={check} value="find_edges" checked={effects.filter.find_edges} />
+                      </span>
+                    </label>
+                    <input type="hidden" id="find_edges" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="smooth">
+                      <span class="left">Smooth </span>
+                      <span class="right">
+                      <input type="checkbox" onChange={check} value="smooth" checked={effects.filter.smooth} />
+                      </span>
+                    </label>
+                    <input type="hidden" id="smooth" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="smooth_more">
+                      <span class="left">Smooth More</span>
+                      <span class="right">
+                      <input type="checkbox" onChange={check} value="smooth_more" checked={effects.filter.smooth_more} />
+                      </span>
+                    </label>
+                    <input type="hidden" id="smooth_more" data-type="filter" value={true} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label w100" for="sharpen">
+                      <span class="left">Sharpen</span>
+                      <span class="right">
+                      <input type="checkbox" onChange={check} value="sharpen" checked={effects.filter.sharpen} />
+                      </span>
+                    </label>
+                    <input type="hidden" id="sharpen" data-type="filter" value={true} />
+                  </div>
+
               </div>
-              <div class="tab-pane fade" id="transform">
-                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeneys organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+             <div class="tab-pane fade " id="transform">
+                <p>transform here</p>
               </div>
-              <div class="tab-pane fade" id="overlay">
-                <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+             <div class="tab-pane fade " id="overlay">
+                <p>Overlay here</p>
               </div>
+
             </div>
         </div>
       );
