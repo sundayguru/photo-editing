@@ -234,11 +234,12 @@ class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
         photo = instance.photo
         image_processor = ImageProcessor(photo)
-        effect_obj = json.loads(instance.effects)
-        image_processor.process(effect_obj)
-        edited_path = image_processor.save()
-        photo.edited_image = edited_path;
-        photo.save()
+        if instance.effects:
+            effect_obj = json.loads(instance.effects)
+            image_processor.process(effect_obj)
+            edited_path = image_processor.save()
+            photo.edited_image = edited_path;
+            photo.save()
 
 
 

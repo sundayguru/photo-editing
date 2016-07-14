@@ -58,7 +58,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'social.apps.django_app.default',
+    'django_nose',
     'photos',
+]
+
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=photos.api,photos.views',
 ]
 
 REST_FRAMEWORK = {
