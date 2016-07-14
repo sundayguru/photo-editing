@@ -1,23 +1,12 @@
 import React from 'react';
-import Loader from 'react-loader';
-import * as action from './actions/GenericAction';
-import * as Toast from './actions/ToastAction';
-import store from './store/FolderStore';
-import Empty from './Empty';
-
+import Photos from './Photos';
 
 export default class extends React.Component {
-    constructor() {
-      super();
-
-    }
-
-    render() {
+  render() {
       const {id} = this.props.params
       $('#active-folder').val(id);
-        return (
-          <Empty />
-        );
-
-    }
+      return (
+        <Photos folder_id={id} />
+      );
+  }
 }

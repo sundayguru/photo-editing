@@ -1,30 +1,41 @@
 import React from 'react';
 import FolderInfo from './FolderInfo';
+import PhotoInfo from './PhotoInfo';
 import Modal from './Modal';
 import storeFolder from './store/FolderStore';
+import storePhoto from './store/PhotoStore';
 
 export default class extends React.Component {
     constructor() {
       super();
-      this.detail = this.detail.bind(this)
-      this.state = {title:'', data:{}};
+      this.folderDetail = this.folderDetail.bind(this)
+      this.photoDetail = this.photoDetail.bind(this)
     }
 
-    detail(data){
-      this.setState({data:data.data, title: data.data.name});
+    folderDetail(data){
+      this.infoElement = <FolderInfo data={data.data} />;
+      this.setState({title: data.data.name});
+    }
+
+    photoDetail(data){
+      this.infoElement = <PhotoInfo data={data.data} />;
+      this.setState({title: data.data.folder_name + ' - ' + data.data.detail.title});
     }
 
     componentWillMount(){
-      storeFolder.on('singleFolder', this.detail);
+      this.state = {title:''};
+      storeFolder.on('singleFolder', this.folderDetail);
+      storePhoto.on('singlePhoto', this.photoDetail);
     }
 
     componentWillUnmount(){
-      storeFolder.removeListener('singleFolder', this.detail);
+      storeFolder.removeListener('singleFolder', this.folderDetail);
+      storePhoto.removeListener('singlePhoto', this.photoDetail);
     }
 
     render() {
         return (
-          <Modal title={this.state.title} bodyContent={ <FolderInfo data={this.state.data} /> } id={"myModal"} />
+          <Modal title={this.state.title} bodyContent={ this.infoElement } id={"myModal"} />
         );
     }
 }
