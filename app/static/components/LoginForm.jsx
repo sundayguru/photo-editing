@@ -40,19 +40,20 @@ export default class extends React.Component {
     }
 
     render() {
+        const {label} = this.props;
         return (
           <form class="form-horizontal" method="post" onSubmit={this.onSubmit.bind(this)}>
             <Loader loaded={this.state.loaded} top="50%" />
             <fieldset>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Username</label>
-                    <div class="col-lg-10">
+                    <label class="col-lg-2 control-label" style={{display: label ? "block" : 'none'}}>Username</label>
+                    <div class="col-lg-12">
                         <input type="text" class="form-control" placeholder="Username" name="username" required />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-lg-2 control-label">Password</label>
-                    <div class="col-lg-10">
+                    <label for="password" class="col-lg-2 control-label" style={{display: label ? "block" : 'none'}}>Password</label>
+                    <div class="col-lg-12">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
                     </div>
                 </div>

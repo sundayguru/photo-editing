@@ -6,7 +6,6 @@ class LoginStore extends EventEmitter {
     login(content){
         var _this = this;
         request.post('/api/v1/auth/login/', content, (err, result) => {
-            console.log('sok',result);
             _this.emit('loginComplete', {status: result.status, data: JSON.parse(result.text) });
         });
     }

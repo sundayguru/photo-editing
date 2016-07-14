@@ -18,8 +18,8 @@ from rest_framework.permissions import (
 )
 from .serializers import *
 from .permissions import IsOwner
-from image_edit import *
-
+from image_processor import *
+import time
 
 class RegistrationApiView(CreateAPIView):
     queryset = User.objects.all()
@@ -60,26 +60,24 @@ class PhotoPreview(View):
         photo = Photo.objects.filter(id=photo_id).first()
         response_data = {'image':''}
         if photo:
-            image_editor = ImageEdit(photo.image.path)
-            for effect_type in effect_obj:
-                effect_data = effect_obj[effect_type]
-                if(effect_data):
-                    editor_method = getattr(self, effect_type)
-                    if editor_method:
-                        editor_method(image_editor, effect_data)
-            response_data = {'image':image_editor.preview()}
+            image_processor = ImageProcessor(photo)
+            image_processor.process(effect_obj)
+            response_data = {'image':image_processor.preview()}
         response_json = json.dumps(response_data)
         return HttpResponse(response_json, content_type="application/json")
 
-    def enhance(self, image_editor, effect_data):
-        for effect_data_type in effect_data:
-            image_editor.enhance(effect_data_type, float(effect_data[effect_data_type]))
+class PhotoShare(View):
+    def get(self, request, *args, **kwargs):
+        share_id = request.GET.get('share_id', None)
+        response_data = {}
+        if share_id:
+            photo = Photo.objects.filter(share_code=share_id).first()
+            if photo:
+                serializer = PhotoSerializer(photo)
+                response_data = serializer.data
 
-    def filter(self, image_editor, effect_data):
-        for effect_data_type in effect_data:
-            image_editor.filter(effect_data_type)
-
-
+        response_json = json.dumps(response_data)
+        return HttpResponse(response_json, content_type="application/json")
 
 
 class FolderApiView(ListCreateAPIView):
@@ -136,10 +134,11 @@ class PhotoApiView(ListCreateAPIView):
     def perform_create(self, serializer):
         folder_id = self.request.POST.get('folder_id', 0)
         folder = Folder.objects.filter(user=self.request.user, id=folder_id).first()
+        code = int(time.time())
         if folder is not None:
-            instance = serializer.save(user=self.request.user, folder=folder)
+            instance = serializer.save(user=self.request.user, folder=folder, share_code=code)
         else:
-            instance = serializer.save(user=self.request.user)
+            instance = serializer.save(user=self.request.user, share_code=code)
 
         detail = PhotoDetail(photo=instance)
         detail.save()
@@ -208,10 +207,6 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwner]
     lookup_field = 'id'
 
-    def perform_destroy(self, instance):
-        cloudinary.api.delete_resources([instance.image.public_id])
-        instance.delete()
-
 
 class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
 
@@ -234,6 +229,18 @@ class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
     """
     serializer_class = PhotoDetailSerializer
     lookup_field = 'pk'
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        photo = instance.photo
+        image_processor = ImageProcessor(photo)
+        effect_obj = json.loads(instance.effects)
+        image_processor.process(effect_obj)
+        edited_path = image_processor.save()
+        photo.edited_image = edited_path;
+        photo.save()
+
+
 
     def get_queryset(self):
         photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()

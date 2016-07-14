@@ -3,6 +3,7 @@ import dispatcher from '../../js/Dispatcher.js';
 import * as request from '../actions/RequestAction.js';
 
 class PhotoStore extends EventEmitter {
+
     create(content){
         var _this = this;
         request.post('/api/v1/photos/', content, (err, result) => {
@@ -47,6 +48,13 @@ class PhotoStore extends EventEmitter {
     get(id){
         var _this = this;
         request.get('/api/v1/photos/' + id + '/', (err, result) => {
+            _this.emit('singlePhoto', {status: result.status, data: JSON.parse(result.text) });
+        });
+    }
+
+    getShare(share_id){
+        var _this = this;
+        request.get('/api/v1/photos/share/?share_id=' + share_id, (err, result) => {
             _this.emit('singlePhoto', {status: result.status, data: JSON.parse(result.text) });
         });
     }

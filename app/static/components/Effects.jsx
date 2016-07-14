@@ -1,4 +1,6 @@
 import React from 'react';
+import RangeField from './forms/RangeField';
+import CheckboxField from './forms/CheckboxField';
 
 export default class extends React.Component {
   render() {
@@ -9,140 +11,48 @@ export default class extends React.Component {
               <li class="active"><a href="#enhance" data-toggle="tab" aria-expanded="false">Enhance</a></li>
               <li class=""><a href="/#filter" data-toggle="tab" aria-expanded="false">Filter</a></li>
               <li class=""><a href="/#transform" data-toggle="tab" aria-expanded="false">Tranform</a></li>
-              <li class=""><a href="/#overlay" data-toggle="tab" aria-expanded="false">Overlay</a></li>
+              <li class=""><a href="/#effects" data-toggle="tab" aria-expanded="false">Effects</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
               <div class="tab-pane fade active in" id="enhance">
-                  <div class="form-group">
-                    <label class="control-label w100" for="Brightness">
-                      <span class="left">Brightness{ effects.enhance.Brightness ? "(" + effects.enhance.Brightness + "%)" : "" } </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="Brightness" checked={effects.enhance.Brightness} /></span>
-                    </label>
-                    <input type="range" id="Brightness" onChange={change} disabled={!effects.enhance.Brightness} data-type="enhance" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="Contrast">
-                      <span class="left">Contrast{ effects.enhance.Contrast ? "(" + effects.enhance.Contrast + "%)" : "" }  </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="Contrast" checked={effects.enhance.Contrast} /></span>
-                    </label>
-                    <input type="range" id="Contrast" onChange={change} disabled={!effects.enhance.Contrast} data-type="enhance" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="Color">
-                      <span class="left">Color{ effects.enhance.Color ? "(" + effects.enhance.Color + "%)" : "" }  </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="Color" checked={effects.enhance.Color} /></span>
-                    </label>
-                    <input type="range" id="Color" onChange={change} disabled={!effects.enhance.Color} data-type="enhance" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="Sharpness">
-                      <span class="left">Sharpness{ effects.enhance.Sharpness ? "(" + effects.enhance.Sharpness + "%)" : "" }  </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="Sharpness" checked={effects.enhance.Sharpness} /></span>
-                    </label>
-                    <input type="range" id="Sharpness" onChange={change} disabled={!effects.enhance.Sharpness} data-type="enhance" />
-                  </div>
-
+                  <RangeField id="Brightness" label="Brightness" value={effects.enhance.Brightness} check={check} change={change} type="enhance" />
+                  <RangeField id="Contrast" label="Contrast" value={effects.enhance.Contrast} check={check} change={change} type="enhance" />
+                  <RangeField id="Color" label="Color" value={effects.enhance.Color} check={check} change={change} type="enhance" />
+                  <RangeField id="Sharpness" label="Sharpness" value={effects.enhance.Sharpness} check={check} change={change} type="enhance" />
               </div>
               <div class="tab-pane fade " id="filter">
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="blur">
-                      <span class="left">Blur </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="blur" checked={effects.filter.blur} /></span>
-                    </label>
-                    <input type="hidden" id="blur" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="contour">
-                      <span class="left">Contour </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="contour" checked={effects.filter.contour} /></span>
-                    </label>
-                    <input type="hidden" id="contour" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="detail">
-                      <span class="left">Detail </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="detail" checked={effects.filter.detail} /></span>
-                    </label>
-                    <input type="hidden" id="detail" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="edge_enhance">
-                      <span class="left">Edge Enhance </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="edge_enhance" checked={effects.filter.edge_enhance} /></span>
-                    </label>
-                    <input type="hidden" id="edge_enhance" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="edge_enhance_more">
-                      <span class="left">Edge Enhance More </span>
-                      <span class="right"><input type="checkbox" onChange={check} value="edge_enhance_more" checked={effects.filter.edge_enhance_more} /></span>
-                    </label>
-                    <input type="hidden" id="edge_enhance_more" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="emboss">
-                      <span class="left">Emboss </span>
-                      <span class="right">
-                      <input type="checkbox" onChange={check} value="emboss" checked={effects.filter.emboss} />
-                      </span>
-                    </label>
-                    <input type="hidden" id="emboss" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="find_edges">
-                      <span class="left">Find Edges </span>
-                      <span class="right">
-                      <input type="checkbox" onChange={check} value="find_edges" checked={effects.filter.find_edges} />
-                      </span>
-                    </label>
-                    <input type="hidden" id="find_edges" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="smooth">
-                      <span class="left">Smooth </span>
-                      <span class="right">
-                      <input type="checkbox" onChange={check} value="smooth" checked={effects.filter.smooth} />
-                      </span>
-                    </label>
-                    <input type="hidden" id="smooth" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="smooth_more">
-                      <span class="left">Smooth More</span>
-                      <span class="right">
-                      <input type="checkbox" onChange={check} value="smooth_more" checked={effects.filter.smooth_more} />
-                      </span>
-                    </label>
-                    <input type="hidden" id="smooth_more" data-type="filter" value={true} />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="control-label w100" for="sharpen">
-                      <span class="left">Sharpen</span>
-                      <span class="right">
-                      <input type="checkbox" onChange={check} value="sharpen" checked={effects.filter.sharpen} />
-                      </span>
-                    </label>
-                    <input type="hidden" id="sharpen" data-type="filter" value={true} />
-                  </div>
-
+                  <CheckboxField id="blur" label="Blur" value={effects.filter.blur} check={check} type="filter" />
+                  <CheckboxField id="contour" label="Contour" value={effects.filter.contour} check={check} type="filter" />
+                  <CheckboxField id="detail" label="Detail" value={effects.filter.detail} check={check} type="filter" />
+                  <CheckboxField id="edge_enhance" label="Edge Enhance " value={effects.filter.edge_enhance} check={check} type="filter" />
+                  <CheckboxField id="edge_enhance_more" label="Edge Enhance More" value={effects.filter.edge_enhance_more} check={check} type="filter" />
+                  <CheckboxField id="emboss" label="Emboss" value={effects.filter.emboss} check={check} type="filter" />
+                  <CheckboxField id="find_edges" label="Find Edges" value={effects.filter.find_edges} check={check} type="filter" />
+                  <CheckboxField id="smooth" label="Smooth" value={effects.filter.smooth} check={check} type="filter" />
+                  <CheckboxField id="smooth_more" label="Smooth More" value={effects.filter.smooth_more} check={check} type="filter" />
+                  <CheckboxField id="sharpen" label="Sharpen" value={effects.filter.sharpen} check={check} type="filter" />
               </div>
              <div class="tab-pane fade " id="transform">
-                <p>transform here</p>
+                  <CheckboxField id="vertical_flip" label="Vertical Flip" value={effects.transform.vertical_flip} check={check} type="transform" />
+                  <CheckboxField id="mirror" label="Mirror" value={effects.transform.mirror} check={check} type="transform" />
+                  <CheckboxField id="invert" label="Invert" value={effects.transform.invert} check={check} type="transform" />
+                  <CheckboxField id="grayscale" label="Gray Scale" value={effects.transform.grayscale} check={check} type="transform" />
+                  <CheckboxField id="black_and_white" label="Black and White" value={effects.transform.black_and_white} check={check} type="transform" />
+                  <CheckboxField id="equalize" label="Equalize" value={effects.transform.equalize} check={check} type="transform" />
               </div>
-             <div class="tab-pane fade " id="overlay">
+
+             <div class="tab-pane fade " id="effects">
+                  <RangeField id="quantize" label="Quantize" value={effects.effect.quantize} check={check} change={change} type="effect" />
+                  <RangeField id="gaussian_blur" label="Gaussian Blur" value={effects.effect.gaussian_blur} check={check} change={change} type="effect" />
+                  <RangeField id="auto_contrast" label="Auto Contrast" value={effects.effect.auto_contrast} check={check} change={change} type="effect" />
+                  <RangeField id="posterize" label="Posterize" value={effects.effect.posterize} check={check} change={change} type="effect" />
+                  <RangeField id="unsharp_mask" label="Unsharp Mask" value={effects.effect.unsharp_mask} check={check} change={change} type="effect" />
+                  <RangeField id="solarize" label="Solarize" value={effects.effect.solarize} check={check} change={change} type="effect" />
+                  <RangeField id="remove_border" label="Zoom" value={effects.effect.remove_border} check={check} change={change} type="effect" />
+                  <RangeField id="rotate" label="Rotate" value={effects.effect.rotate} check={check} change={change} type="effect" />
+              </div>
+
+             <div class="tab-pane fade " id="other">
                 <p>Overlay here</p>
               </div>
 

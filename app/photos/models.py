@@ -27,11 +27,11 @@ class Folder(models.Model):
 class Photo(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     folder = models.ForeignKey(Folder, default=0)
-    #image = CloudinaryField('image')
-    #image = models.FileField(upload_to='files/%Y/%m/%d')
     image = models.ImageField(upload_to='main',
         null=True,
         blank=True)
+    edited_image = models.CharField(max_length=255, default="")
+    share_code = models.CharField(max_length=50, default="")
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 

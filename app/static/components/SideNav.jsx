@@ -1,4 +1,5 @@
 import React from 'react';
+import ShareSideNav from './ShareSideNav';
 
 export default class extends React.Component {
     componentDidMount() {
@@ -17,6 +18,9 @@ export default class extends React.Component {
     }
 
     render() {
+        if(localStorage.getItem('user') == 'false'){
+            return ( <ShareSideNav /> );
+        }
         return (
          <div class="table-of-contents">
             <h4 class="padleft-20">Favorites</h4>

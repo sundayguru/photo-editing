@@ -32,6 +32,18 @@ class ImageEdit:
         """ Translates a color image to black and white. """
         self.output = self.output.convert('L')
 
+    def grayscale(self):
+        """ Convert the image to grayscale. """
+        self.output = ImageOps.grayscale(self.output)
+
+    def invert(self):
+        """ Negates the image. """
+        self.output = ImageOps.invert(self.output)
+
+    def equalize(self):
+        """ Equalize the image histogram. """
+        self.output = ImageOps.equalize(self.output)
+
     def filter(self, filter_type):
         """ Applies a pre-defined set of filters. """
         self.output = self.output.filter(self.filters[filter_type])
@@ -45,55 +57,62 @@ class ImageEdit:
             self.output = enhancement.enhance(actual_value)
 
     def quantize(self, value=256):
-        """ Convert the image to ‘P’ mode with the specified number of colors. """
-        self.image_format = 'PNG'
-        self.output = self.output.quantize(value)
+        """ Convert the image to 'P' mode with the specified number of colors. """
+        actual_value = float(value)/100 * 256;
+        self.output = self.output.quantize(int(actual_value))
+        self.output = self.output.convert('RGB')
 
     def gaussian_blur(self, radius):
-        self.output = self.output.filter(ImageFilter.GaussianBlur(radius))
+        """ Gaussian blur filter. """
+        actual_value = float(radius)/100 * 20
+        self.output = self.output.filter(ImageFilter.GaussianBlur(int(actual_value)))
 
     def auto_contrast(self, cutoff=0):
-        self.output = ImageOps.autocontrast(self.output, cutoff)
+        """ Normalize image contrast. """
+        actual_value = float(cutoff)/100 * 50
+        self.output = ImageOps.autocontrast(self.output, int(actual_value))
 
     def posterize(self, bit=1):
-        self.output = ImageOps.posterize(self.output, bit)
+        """ Reduce the number of bits for each color channel. """
+        actual_value = float(bit)/100 * 8
+        self.output = ImageOps.posterize(self.output, int(actual_value))
+
+    def unsharp_mask(self, radius):
+        """ Unsharp mask filter. """
+        self.output = self.output.filter(ImageFilter.UnsharpMask(int(radius)))
 
     def solarize(self, threshold=128):
-        self.output = ImageOps.solarize(self.output, threshold)
+        """ Invert all pixel values above a threshold """
+        actual_value = float(threshold)/100 * 256
+        self.output = ImageOps.solarize(self.output, int(actual_value))
 
-    def invert(self):
-        self.output = ImageOps.invert(self.output)
+    def remove_border(self, border_size=0):
+        """ Remove border from image. """
+        actual_value = float(border_size)/100 * 200;
+        self.output = ImageOps.crop(self.output, int(actual_value))
+
+    def rotate(self, value):
+        """ Rotates image in a given angle. """
+        actual_value = float(value)/100 * 360
+        self.output = self.output.rotate(int(actual_value))
 
     def colorize(self, black="#000", white="#fff"):
         self.black_and_white()
         self.output = ImageOps.colorize(self.output, black, white)
 
-    def remove_border(self, border_size=0):
-        self.output = ImageOps.crop(self.output, border_size)
-
-    def rotate(self, value):
-        self.output = self.output.rotate(value)
+    def expand(self, border=10, fill="#ff0"):
+        self.output = ImageOps.expand(self.output, border=border, fill=fill)
 
     def crop(self, box):
         self.output = self.output.crop(box)
 
-    def expand(self, border=10, fill="#ff0"):
-        self.output = ImageOps.expand(self.output, border=border, fill=fill)
-
     def vertical_flip(self):
+        """ Flip the image vertically (top to bottom). """
         self.output = ImageOps.flip(self.output)
 
     def mirror(self):
+        """ Flip image horizontally (left to right). """
         self.output = ImageOps.mirror(self.output)
-
-    def grayscale(self):
-        self.output = ImageOps.grayscale(self.output)
-
-    def equalize(self, mask=None):
-        self.output = ImageOps.equalize(self.output, mask)
-
-    def unsharp_mask(self, radius):
-        self.output = self.output.filter(ImageFilter.UnsharpMask(radius))
 
     def set_font(self, font='Honey-I-spilt-Verdana.ttf', font_size=100):
         fonts_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'static/fonts')
@@ -122,4 +141,5 @@ class ImageEdit:
         return base64.b64encode(buffered.getvalue())
 
     def save(self):
-        self.output.save(self.path.replace('main', 'edited'), format=self.image_format)
+        path = self.path.replace('main', 'edited')
+        self.output.save(path, format=self.image_format)

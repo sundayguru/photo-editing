@@ -56,33 +56,36 @@ export default class extends React.Component {
         image: {
           verticalFit: true,
           titleSrc: function(item) {
-            return item.el.attr('title') + '<small><a href="#">share</a></small>';
+            return item.el.attr('title') + '<small><a href="#" class="btn btn-primary">FB share</a></small>';
           }
         },
         zoom: {
           enabled: true,
           duration: 300
         }
-
         });
   }
 
 
   render() {
-      var {url, image, id, detail} = this.props;
+      var {edited_image, image, id, detail} = this.props;
       this.id = id;
       return (
-         <div class="col-sm-4 col-md-3">
-            <Loader loaded={this.state.loaded} />
-            <div class="thumbnail">
+        <div class="col-sm-4 col-md-3">
+          <Loader loaded={this.state.loaded} />
+          <div class="thumbnail">
             <Options editLink={ "editimage/" + id } deleteMethod={this.deleteImage.bind(this)} id={id} type={"image"} />
-            <a href={image} class="preview" title={detail.title} >
-              <img src={image} alt={detail.title} /> </a>
-              <div class="caption">
-                <h5>{detail.title.length ? detail.title : 'Untiltled'}</h5>
-              </div>
+            <div class="crop">
+              <a href={edited_image ? edited_image + "?" + (new Date().getTime()) : image} class="preview" title={detail.title} >
+                <img src={edited_image ? edited_image + "?" +(new Date().getTime())  : image} alt={detail.title} />
+              </a>
+            </div>
+
+            <div class="caption">
+              <h5>{detail.title.length ? detail.title : 'Untiltled'}</h5>
             </div>
           </div>
+        </div>
       );
   }
 }

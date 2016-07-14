@@ -10,7 +10,7 @@ export default class extends React.Component {
       this.updateComplete = this.updateComplete.bind(this);
       this.previewComplete = this.previewComplete.bind(this);
       this.detail = this.detail.bind(this);
-      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}};
+      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}, 'effect':{}};
     }
 
     componentWillMount(){
@@ -22,6 +22,26 @@ export default class extends React.Component {
       storePhoto.on('previewPhoto', this.previewComplete);
       storePhoto.on('singlePhoto', this.detail);
     }
+
+
+    componentDidMount(){
+        $('.preview').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          mainClass: 'mfp-img-mobile',
+          image: {
+            verticalFit: true,
+            titleSrc: function(item) {
+              return '';
+            }
+          },
+          zoom: {
+            enabled: true,
+            duration: 300
+          }
+          });
+    }
+
 
     componentWillUnmount(){
       storePhoto.removeListener('updatePhoto', this.updateComplete);
@@ -48,8 +68,8 @@ export default class extends React.Component {
 
     previewComplete(result){
       this.setState({loaded:true});
-      console.log(result);
       $('.image-preview img').attr('src', 'data:image/jpeg;base64, ' + result.data.image)
+      $('.preview').attr('href', 'data:image/jpeg;base64, ' + result.data.image)
     }
 
     handleChange(e) {
@@ -87,15 +107,12 @@ export default class extends React.Component {
     }
 
     decodeEffects(effectString){
-      var effects = {};
-      var args = effectString.split('/');
-      args.forEach(function(singleEffect){
-        if(singleEffect){
-          var e = singleEffect.split(':');
-          effects[e[0]] = e[1];
-          $('#' + e[0]).val(e[1]);
+      var effects = JSON.parse(effectString);
+      for(var singleEffect in effects){
+        for(var effect_type in effects[singleEffect]){
+          $('#' + effect_type).val(effects[singleEffect][effect_type]);
         }
-      });
+      }
       return effects;
     }
 
@@ -134,8 +151,12 @@ export default class extends React.Component {
               <fieldset>
                 <div class="col-md-6 no-pad-left">
                   <div class="image-preview">
+                  <input type="text" disabled={true} value={ "Share Link: " + document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.share_code } class="col-lg-12" />
                     <Loader loaded={this.state.loaded} top="50%" left="50%" />
-                    <img src={this.state.file.image} alt="..." class="img-responsive" />
+                    <a href={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="preview" title="Zoom" >
+                      <img src={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="img-responsive" />
+                    </a>
+
                   </div>
                 </div>
                 <div class="col-md-6">
