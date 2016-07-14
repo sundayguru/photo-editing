@@ -99,7 +99,7 @@ export default class extends React.Component {
                   </div>
                   <div class="form-group">
                       <div class="col-lg-10 col-lg-offset-2">
-                          <button type="submit" class="btn btn-primary right" disabled={!this.state.loaded} >Register</button>
+                          <button type="submit" class="btn btn-primary right" disabled={!this.state.loaded} > <i class="mdi mdi-account-check"></i> Register</button>
                       </div>
                   </div>
               </fieldset>

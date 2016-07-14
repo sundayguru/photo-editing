@@ -24,29 +24,23 @@ export default class extends React.Component {
         const {editLink, deleteMethod, id, type} = this.props;
         this.id = id;
         this.detailType = type;
-        var editList =  <li>
-                            <a href={"#/"+editLink} onClick={ this.toggleFolderModal.bind(this) } >
-                            <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
-                        </li>;
-        if(type == 'image'){
-            editList =  <li>
-                            <a href={"#/"+editLink}>
-                            <img src="../static/images/icons/edit.png" class="icon-size-small" /> Edit</a>
-                        </li>;
-        }
         return (
          <div class="options">
           <div class="btn-group">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown-menu-left">
-                    {editList}
+                    <li>
+                        <a href={"#/"+editLink} onClick={ type != 'image' ? this.toggleFolderModal.bind(this) : '' } >
+                        <i class="mdi mdi-table-edit"></i> Edit</a>
+                    </li>
                     <li>
                         <a href="#" onClick={deleteMethod}>
-                            <img src="../static/images/icons/delete-file.png" class="icon-size-small" /> Delete</a>
+                            <i class="mdi mdi-delete-forever"></i> Delete</a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#" onClick={ this.toggleDetailModal.bind(this) } ><img src="../static/images/icons/info.png" class="icon-size-small" /> Info</a>
+                        <a href="#" onClick={ this.toggleDetailModal.bind(this) } >
+                        <i class="mdi mdi-information"></i> Info</a>
                     </li>
                 </ul>
             </div>

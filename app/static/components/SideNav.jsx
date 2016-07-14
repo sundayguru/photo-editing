@@ -26,15 +26,15 @@ export default class extends React.Component {
             <h4 class="padleft-20">Favorites</h4>
             <div class="list-group">
                 <a class={"list-group-item " + this.isActive('/#/?')} href="#/">
-                    <img src="../static/images/icons/folder.png" class="icon-size-small" /><span>All Folders</span>
+                    <i class="mdi mdi-folder"></i> <span>All Folders</span>
                 </a>
 
                 <a class={"list-group-item " + this.isActive('untitled')} href="#/folder/0/untitled">
-                    <img src="../static/images/icons/folder.png" class="icon-size-small" /><span>Untitled</span>
+                    <i class="mdi mdi-folder-outline"></i> <span>Untitled</span>
                 </a>
 
                 <a class={"list-group-item " + this.isActive('photos')} href="#/photos">
-                    <img src="../static/images/icons/photo-file.png" class="icon-size-small" /> All Photos
+                    <i class="mdi mdi-file-image"></i>  All Photos
                 </a>
             </div>
          </div>
