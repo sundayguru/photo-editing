@@ -57,6 +57,7 @@ export default class extends React.Component {
     }
 
     updateComplete(result){
+      this.setState({loaded: true});
       if(result.status == 200){
         Toast.ok('Photo updated')
       }else{
@@ -137,6 +138,7 @@ export default class extends React.Component {
 
     onSubmit(e) {
       e.preventDefault();
+      this.setState({loaded: false});
       var form = this.getFormData();
       storePhoto.update(form);
     }

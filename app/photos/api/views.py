@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
-import json
+import json, os
 import time
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -212,6 +212,15 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PhotoSerializer
     permission_classes = [IsOwner]
     lookup_field = 'id'
+
+    def perform_destroy(self, instance):
+        if(os.path.isfile(instance.image.path)):
+            os.remove(instance.image.path)
+
+        if(os.path.isfile(instance.image.path.replace('main', 'edited'))):
+            os.remove(instance.image.path.replace('main', 'edited'))
+
+        instance.delete()
 
 
 class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
