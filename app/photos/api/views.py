@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
-import json, cloudinary
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
+import json
+import time
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -19,7 +20,7 @@ from rest_framework.permissions import (
 from .serializers import *
 from .permissions import IsOwner
 from image_processor import *
-import time
+
 
 class RegistrationApiView(CreateAPIView):
     queryset = User.objects.all()
@@ -28,6 +29,7 @@ class RegistrationApiView(CreateAPIView):
 
 
 class LoginApiView(View):
+
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -37,15 +39,15 @@ class LoginApiView(View):
             if user.is_active:
                 login(request, user)
                 response_data.update(
-                    {'login':True, 'user': user.username}
+                    {'login': True, 'user': user.username}
                 )
             else:
                 response_data.update(
-                    {'login':False, 'message': 'User inactive'}
+                    {'login': False, 'message': 'User inactive'}
                 )
         else:
             response_data.update(
-                {'login':False, 'message': 'Invalid credentials'}
+                {'login': False, 'message': 'Invalid credentials'}
             )
 
         response_json = json.dumps(response_data)
@@ -53,20 +55,23 @@ class LoginApiView(View):
 
 
 class PhotoPreview(View):
+
     def post(self, request, *args, **kwargs):
         photo_id = request.POST.get('photo_id', 0)
         effects = request.POST.get('effects', '')
         effect_obj = json.loads(effects)
         photo = Photo.objects.filter(id=photo_id).first()
-        response_data = {'image':''}
+        response_data = {'image': ''}
         if photo:
             image_processor = ImageProcessor(photo)
             image_processor.process(effect_obj)
-            response_data = {'image':image_processor.preview()}
+            response_data = {'image': image_processor.preview()}
         response_json = json.dumps(response_data)
         return HttpResponse(response_json, content_type="application/json")
 
+
 class PhotoShare(View):
+
     def get(self, request, *args, **kwargs):
         share_id = request.GET.get('share_id', None)
         response_data = {}
@@ -109,6 +114,7 @@ class FolderApiView(ListCreateAPIView):
         queryset = Folder.objects.filter(user=self.request.user)
         return queryset
 
+
 class PhotoApiView(ListCreateAPIView):
 
     """
@@ -133,17 +139,17 @@ class PhotoApiView(ListCreateAPIView):
     # before create
     def perform_create(self, serializer):
         folder_id = self.request.POST.get('folder_id', 0)
-        folder = Folder.objects.filter(user=self.request.user, id=folder_id).first()
+        folder = Folder.objects.filter(
+            user=self.request.user, id=folder_id).first()
         code = int(time.time())
         if folder is not None:
-            instance = serializer.save(user=self.request.user, folder=folder, share_code=code)
+            instance = serializer.save(
+                user=self.request.user, folder=folder, share_code=code)
         else:
             instance = serializer.save(user=self.request.user, share_code=code)
 
         detail = PhotoDetail(photo=instance)
         detail.save()
-
-
 
     def get_queryset(self):
         folder_id = self.kwargs.get('id', -1)
@@ -151,7 +157,8 @@ class PhotoApiView(ListCreateAPIView):
             return Photo.objects.filter(user=self.request.user, folder=0)
         folder = Folder.objects.filter(id=folder_id)
         if(folder):
-            queryset = Photo.objects.filter(user=self.request.user, folder=folder)
+            queryset = Photo.objects.filter(
+                user=self.request.user, folder=folder)
         else:
             queryset = Photo.objects.filter(user=self.request.user)
         return queryset
@@ -180,7 +187,6 @@ class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = FolderSerializer
     permission_classes = [IsOwner]
     lookup_field = 'id'
-
 
 
 class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
@@ -238,10 +244,8 @@ class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
             effect_obj = json.loads(instance.effects)
             image_processor.process(effect_obj)
             edited_path = image_processor.save()
-            photo.edited_image = edited_path;
+            photo.edited_image = edited_path
             photo.save()
-
-
 
     def get_queryset(self):
         photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()

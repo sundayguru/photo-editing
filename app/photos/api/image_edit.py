@@ -1,5 +1,12 @@
-from PIL import Image, ImageFilter, ImageOps, ImageStat, ImageEnhance, ImageDraw, ImageFont
-import base64, cStringIO, os
+from PIL import (
+    Image, ImageFilter,
+    ImageOps, ImageStat,
+    ImageEnhance, ImageDraw,
+    ImageFont
+)
+import base64
+import cStringIO
+import os
 
 
 class ImageEdit:
@@ -53,23 +60,30 @@ class ImageEdit:
         self.output = self.output.filter(self.filters[filter_type])
 
     def enhance(self, enhance_type, value):
-        """ Used to enhance image brightness, color, contrast and sharpness. """
-        method = getattr(ImageEnhance,enhance_type)
+        """
+        Used to enhance image brightness,
+        color, contrast and sharpness.
+        """
+        method = getattr(ImageEnhance, enhance_type)
         if method:
             actual_value = (value/100) * self.max_enhance
             enhancement = method(self.output)
             self.output = enhancement.enhance(actual_value)
 
     def quantize(self, value=256):
-        """ Convert the image to 'P' mode with the specified number of colors. """
-        actual_value = float(value)/100 * 256;
+        """
+        Convert the image to 'P' mode with the
+        specified number of colors.
+        """
+        actual_value = float(value)/100 * 256
         self.output = self.output.quantize(int(actual_value))
         self.output = self.output.convert('RGB')
 
     def gaussian_blur(self, radius):
         """ Gaussian blur filter. """
         actual_value = float(radius)/100 * 20
-        self.output = self.output.filter(ImageFilter.GaussianBlur(int(actual_value)))
+        self.output = self.output.filter(
+            ImageFilter.GaussianBlur(int(actual_value)))
 
     def auto_contrast(self, cutoff=0):
         """ Normalize image contrast. """
@@ -95,7 +109,7 @@ class ImageEdit:
 
     def remove_border(self, border_size=0):
         """ Remove border from image. """
-        actual_value = float(border_size)/100 * 200;
+        actual_value = float(border_size)/100 * 200
         self.output = ImageOps.crop(self.output, int(actual_value))
 
     def rotate(self, value):
@@ -122,22 +136,26 @@ class ImageEdit:
         self.output = ImageOps.mirror(self.output)
 
     def set_font(self, font='Honey-I-spilt-Verdana.ttf', font_size=100):
-        fonts_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'static/fonts')
+        fonts_path = os.path.join(
+            os.path.dirname(os.path.dirname(
+                os.path.dirname(__file__))), 'static/fonts')
         self.font = ImageFont.truetype(fonts_path + '/' + font, font_size)
 
-    def text(self, text, x, y, fill=(255,255,255)):
+    def text(self, text, x, y, fill=(255, 255, 255)):
         draw = ImageDraw.Draw(self.output)
         if not self.font:
             self.set_font()
-        draw.text((x,y), text, font=self.font, fill=fill)
+        draw.text((x, y), text, font=self.font, fill=fill)
         del draw
 
-    def line(self, start_x=0, end_x=100, start_y=0, end_y=100, fill="#fff", width=50):
+    def line(self, start_x=0, end_x=100, start_y=0,
+             end_y=100, fill="#fff", width=50):
         draw = ImageDraw.Draw(self.output)
         draw.line((start_x, start_y, end_x, end_y), fill=fill, width=width)
         del draw
 
-    def rectangle(self, start_x=0, end_x=100, start_y=0, end_y=100, fill="#fff"):
+    def rectangle(self, start_x=0, end_x=100,
+                  start_y=0, end_y=100, fill="#fff"):
         draw = ImageDraw.Draw(self.output)
         draw.rectangle((start_x, start_y, end_x, end_y), fill=fill)
         del draw
@@ -149,7 +167,9 @@ class ImageEdit:
 
     def save(self):
         path = self.path.replace('main', 'edited')
-        edit_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'media_cdn/edited')
+        edit_path = os.path.join(
+            os.path.dirname(os.path.dirname(
+                os.path.dirname(__file__))), 'media_cdn/edited')
         if not os.path.exists(edit_path):
             os.makedirs(edit_path)
         self.output.save(path, format=self.image_format)

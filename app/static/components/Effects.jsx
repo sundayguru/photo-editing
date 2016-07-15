@@ -7,7 +7,7 @@ export default class extends React.Component {
       const {change, check, effects} = this.props;
       return (
         <div class="row">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs row">
               <li class="active"><a href="#enhance" data-toggle="tab" aria-expanded="false">Enhance</a></li>
               <li class=""><a href="/#filter" data-toggle="tab" aria-expanded="false">Filter</a></li>
               <li class=""><a href="/#transform" data-toggle="tab" aria-expanded="false">Tranform</a></li>
