@@ -6,7 +6,6 @@ from django.conf import settings
 class Folder(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     name = models.CharField(max_length=100)
-    parent = models.ForeignKey('self', default=0)
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -25,7 +24,7 @@ class Folder(models.Model):
 
 class Photo(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
-    folder = models.ForeignKey(Folder, default=0)
+    folder = models.ForeignKey(Folder, null=True, blank=True)
     image = models.ImageField(upload_to='main',
         null=True,
         blank=True)

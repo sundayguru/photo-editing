@@ -154,7 +154,7 @@ class PhotoApiView(ListCreateAPIView):
     def get_queryset(self):
         folder_id = self.kwargs.get('id', -1)
         if int(folder_id) == 0:
-            return Photo.objects.filter(user=self.request.user, folder=0)
+            return Photo.objects.filter(user=self.request.user, folder=None)
         folder = Folder.objects.filter(id=folder_id)
         if(folder):
             queryset = Photo.objects.filter(
