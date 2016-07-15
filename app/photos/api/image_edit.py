@@ -28,9 +28,12 @@ class ImageEdit:
         except:
             raise ValueError('Unable to open specified image path')
 
+    def convert(self, mode="RGB"):
+        self.output = self.output.convert(mode)
+
     def black_and_white(self):
         """ Translates a color image to black and white. """
-        self.output = self.output.convert('L')
+        self.convert('L')
 
     def grayscale(self):
         """ Convert the image to grayscale. """
@@ -38,6 +41,7 @@ class ImageEdit:
 
     def invert(self):
         """ Negates the image. """
+        self.convert()
         self.output = ImageOps.invert(self.output)
 
     def equalize(self):
@@ -69,11 +73,13 @@ class ImageEdit:
 
     def auto_contrast(self, cutoff=0):
         """ Normalize image contrast. """
+        self.convert()
         actual_value = float(cutoff)/100 * 50
         self.output = ImageOps.autocontrast(self.output, int(actual_value))
 
     def posterize(self, bit=1):
         """ Reduce the number of bits for each color channel. """
+        self.convert()
         actual_value = float(bit)/100 * 8
         self.output = ImageOps.posterize(self.output, int(actual_value))
 
@@ -83,6 +89,7 @@ class ImageEdit:
 
     def solarize(self, threshold=128):
         """ Invert all pixel values above a threshold """
+        self.convert()
         actual_value = float(threshold)/100 * 256
         self.output = ImageOps.solarize(self.output, int(actual_value))
 
@@ -142,4 +149,7 @@ class ImageEdit:
 
     def save(self):
         path = self.path.replace('main', 'edited')
+        edit_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'media_cdn/edited')
+        if not os.path.exists(edit_path):
+            os.makedirs(edit_path)
         self.output.save(path, format=self.image_format)
