@@ -1,6 +1,5 @@
 *.pyc
 .env.py
-app/app/development.py
 .env.yml
 db.sqlite3
 __pycache__
