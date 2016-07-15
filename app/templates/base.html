@@ -16,6 +16,16 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=135058293567210";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <input type="hidden" name="index" id='index' value="{{index}}" />
     <input type="hidden" name="active-folder" id='active-folder' value="0" />
     <input type="hidden" name="currentUser" id='current-user' value="{{user}}" />

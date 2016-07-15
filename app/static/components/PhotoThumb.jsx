@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader';
 import Options from './Options';
+import ShareButtons from './ShareButtons';
 import store from './store/PhotoStore';
 import * as Toast from './actions/ToastAction';
 
@@ -54,7 +55,7 @@ export default class extends React.Component {
         image: {
           verticalFit: true,
           titleSrc: function(item) {
-            return item.el.attr('title') + '<small><a href="#" class="btn btn-primary">FB share</a></small>';
+            return item.el.attr('title');
           }
         },
         zoom: {
@@ -64,10 +65,10 @@ export default class extends React.Component {
         });
   }
 
-
   render() {
-      var {edited_image, image, id, detail} = this.props;
+      var {edited_image, image, id, share_code, detail} = this.props;
       this.id = id;
+       const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + share_code;
       return (
         <div class="col-sm-4 col-md-3">
           <Loader loaded={this.state.loaded} />
@@ -79,7 +80,7 @@ export default class extends React.Component {
               </a>
             </div>
             <div class="caption">
-              <h5>{detail.title.length ? detail.title : 'Untiltled'}</h5>
+              <h5>{detail.title.length ? detail.title : 'Untiltled'} <ShareButtons share_link={share_link} /></h5>
             </div>
           </div>
         </div>
