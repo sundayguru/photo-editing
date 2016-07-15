@@ -28,11 +28,9 @@ export default class extends React.Component {
                 <a class={"list-group-item " + this.isActive('/#/?')} href="#/">
                     <i class="mdi mdi-folder"></i> <span>All Folders</span>
                 </a>
-
                 <a class={"list-group-item " + this.isActive('untitled')} href="#/folder/0/untitled">
                     <i class="mdi mdi-folder-outline"></i> <span>Uncategorized</span>
                 </a>
-
                 <a class={"list-group-item " + this.isActive('photos')} href="#/photos">
                     <i class="mdi mdi-file-image"></i>  All Photos
                 </a>

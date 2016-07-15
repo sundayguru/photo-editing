@@ -8,26 +8,23 @@
     <title>Photo Editing</title>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'mdi/css/materialdesignicons.min.css' %}" media="screen">
-    <link rel="stylesheet" href="{% static 'css/themes/cosmo/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/themes/cerulean/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'css/custom.min.css' %}">
-    <link href="{% static 'css/style4.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/slide.css' %}" type="text/css" rel="stylesheet" />
     <link href="{% static 'css/magnific-popup.css' %}" type="text/css" rel="stylesheet" />
     <link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-<input type="hidden" name="index" id='index' value="{{index}}" />
-<input type="hidden" name="active-folder" id='active-folder' value="0" />
-<input type="hidden" name="currentUser" id='current-user' value="{{user}}" />
-<input type="hidden" name="facebook" id='facebook' value="{% url 'social:begin' backend='facebook' %}?next={{ request.path }}" />
-<input type="hidden" name="twitter" id='twitter' value="{% url 'social:begin' backend='twitter' %}?next={{ request.path }}" />
-<input type="hidden" name="google" id='google' value="{% url 'social:begin' backend='google-oauth2' %}?next={{ request.path }}" />
-
- <p id="form-token">{% csrf_token %}</p>
- <div id = "app"></div>
-<script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-<script src = "{% static 'build/client.min.js' %}"></script>
+    <input type="hidden" name="index" id='index' value="{{index}}" />
+    <input type="hidden" name="active-folder" id='active-folder' value="0" />
+    <input type="hidden" name="currentUser" id='current-user' value="{{user}}" />
+    <p id="form-token">{% csrf_token %}</p>
+    <div id="app"></div>
+    <script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'build/client.min.js' %}"></script>
 </body>
+
 </html>

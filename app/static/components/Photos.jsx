@@ -35,7 +35,6 @@ export default class extends React.Component {
       store.removeListener('photos', this.listPhotos);
     }
 
-
     listPhotos(data){
       this.setState({
         photos: data.data.results,
@@ -44,7 +43,6 @@ export default class extends React.Component {
         previous: data.data.previous,
         loaded: true
       });
-
     }
 
     render() {

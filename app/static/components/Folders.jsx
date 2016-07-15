@@ -10,7 +10,6 @@ import ReactPaginate from 'react-paginate';
 export default class extends React.Component {
     constructor() {
       super();
-
       this.complete = this.complete.bind(this);
     }
 

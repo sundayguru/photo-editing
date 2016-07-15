@@ -1,5 +1,5 @@
 import React from 'react';
-import RegisterForm from './RegisterForm';
+import RegisterForm from './forms/RegisterForm';
 import SocialButtons from './SocialButtons';
 
 export default class extends React.Component {

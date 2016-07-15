@@ -1,21 +1,22 @@
 import React from 'react';
 import Loader from 'react-loader';
-import * as action from './actions/GenericAction';
-import * as Toast from './actions/ToastAction';
-import loginStore from './store/LoginStore';
+import * as action from '../actions/GenericAction';
+import * as Toast from '../actions/ToastAction';
+import loginStore from '../store/LoginStore';
 
 export default class extends React.Component {
     constructor() {
       super();
+      this.loginComplete = this.loginComplete.bind(this);
     }
 
     componentWillMount(){
         this.state = {loaded:true};
-        loginStore.on('loginComplete', this.loginComplete.bind(this));
+        loginStore.on('loginComplete', this.loginComplete);
     }
 
     componentWillUnmount(){
-      loginStore.removeListener('loginComplete', this.loginComplete.bind(this));
+      loginStore.removeListener('loginComplete', this.loginComplete);
     }
 
     loginComplete(data){

@@ -6,7 +6,6 @@ import * as Toast from './actions/ToastAction';
 
 
 export default class extends React.Component {
-
   constructor(){
     super();
     this.deleteComplete = this.deleteComplete.bind(this);
@@ -37,9 +36,7 @@ export default class extends React.Component {
     }else{
       Toast.error('Unable to complete request');
     }
-
   }
-
 
   render() {
       var {name, id, photos} = this.props;

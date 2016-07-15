@@ -1,9 +1,9 @@
 import React from 'react';
 import Loader from 'react-loader';
-import registerStore from './store/RegisterStore';
-import loginStore from './store/LoginStore';
-import * as action from './actions/GenericAction';
-import * as Toast from './actions/ToastAction';
+import registerStore from '../store/RegisterStore';
+import loginStore from '../store/LoginStore';
+import * as action from '../actions/GenericAction';
+import * as Toast from '../actions/ToastAction';
 
 export default class extends React.Component {
     constructor() {
@@ -70,7 +70,6 @@ export default class extends React.Component {
       const {label} = this.props;
         return (
           <form class="form-horizontal" method="post" onSubmit={this.onSubmit.bind(this)}>
-
               <fieldset>
                   <Loader loaded={this.state.loaded} top="73%" />
                   <div class="form-group">

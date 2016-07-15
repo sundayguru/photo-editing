@@ -9,7 +9,6 @@ import Folders from '../components/Folders';
 import Upload from '../components/Upload';
 import Photos from '../components/Photos';
 import EditImage from '../components/EditImage';
-import Folder from '../components/Folder';
 import FolderContent from '../components/FolderContent';
 import FolderUntitled from '../components/FolderUntitled';
 
@@ -41,8 +40,6 @@ ReactDOM.render(
             <Route path="upload/:id" component={ Upload } onEnter={requireAuth} />
             <Route path="photos" component={ Photos } onEnter={requireAuth} />
             <Route path="editimage/:id" component={ EditImage } onEnter={requireAuth} />
-            <Route path="editfolder/:id" component={ Folder } onEnter={requireAuth} />
-            <Route path="folder" component={ Folder } onEnter={requireAuth} />
             <Route path="folder/:id" component={ FolderContent } onEnter={requireAuth} />
             <Route path="folder/:id/untitled" component={ FolderUntitled } onEnter={requireAuth} />
         </Route>

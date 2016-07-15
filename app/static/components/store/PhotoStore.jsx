@@ -3,7 +3,6 @@ import dispatcher from '../../js/Dispatcher.js';
 import * as request from '../actions/RequestAction.js';
 
 class PhotoStore extends EventEmitter {
-
     create(content){
         var _this = this;
         request.post('/api/v1/photos/', content, (err, result) => {

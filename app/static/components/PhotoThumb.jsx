@@ -6,7 +6,6 @@ import * as Toast from './actions/ToastAction';
 
 
 export default class extends React.Component {
-
   constructor(){
     super();
     this.deleteComplete = this.deleteComplete.bind(this);
@@ -38,7 +37,6 @@ export default class extends React.Component {
     }else{
       Toast.error('Unable to complete request');
     }
-
   }
 
   getEffectUrl(url, effects){
@@ -80,7 +78,6 @@ export default class extends React.Component {
                 <img src={edited_image ? edited_image + "?" +(new Date().getTime())  : image} alt={detail.title} />
               </a>
             </div>
-
             <div class="caption">
               <h5>{detail.title.length ? detail.title : 'Untiltled'}</h5>
             </div>
