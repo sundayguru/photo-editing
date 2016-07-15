@@ -10,6 +10,7 @@ if 'test' in sys.argv:
         }
     }
     SECRET_KEY = "test-secret"
+    DEBUG = True
 else:
     DATABASES = {
         'default': dj_database_url.config()
