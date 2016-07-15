@@ -5,10 +5,10 @@ export default class extends React.Component {
   niceDatetime(date_time){
     if(date_time == undefined)
       return
-
     var dt = date_time.split('.');
     return dt[0].replace('T', " ");
   }
+
   render() {
       var {data} = this.props;
       return (
@@ -22,7 +22,6 @@ export default class extends React.Component {
           <ModalTableRow column="Share Link" value={ document.location.protocol + '//' + document.location.host + '/#/share/' + data.share_code} />
         </tbody>
       </table>
-
       );
   }
 }

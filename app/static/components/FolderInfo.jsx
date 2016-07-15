@@ -5,10 +5,10 @@ export default class extends React.Component {
   niceDatetime(date_time){
     if(date_time == undefined)
       return
-
     var dt = date_time.split('.');
     return dt[0].replace('T', " ");
   }
+
   render() {
       var {data} = this.props;
       return (

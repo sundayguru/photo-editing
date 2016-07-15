@@ -36,14 +36,14 @@ export default class extends React.Component {
             enabled: true,
             duration: 300
           }
-          });
+        });
     }
 
     detail(result){
       if(result.status == 200){
         this.setState({file: result.data, loaded: true});
       }else{
-        //document.location.href = '#/'
+        document.location.href = '#/'
       }
     }
 

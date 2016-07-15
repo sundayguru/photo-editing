@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
-from cloudinary.models import CloudinaryField
 
 
 class Folder(models.Model):

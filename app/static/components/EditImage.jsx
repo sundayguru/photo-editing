@@ -23,7 +23,6 @@ export default class extends React.Component {
       storePhoto.on('singlePhoto', this.detail);
     }
 
-
     componentDidMount(){
         $('.preview').magnificPopup({
           type: 'image',
@@ -41,7 +40,6 @@ export default class extends React.Component {
           }
           });
     }
-
 
     componentWillUnmount(){
       storePhoto.removeListener('updatePhoto', this.updateComplete);
@@ -156,7 +154,6 @@ export default class extends React.Component {
                     <a href={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="preview" title="Zoom" >
                       <img src={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="img-responsive" />
                     </a>
-
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -167,11 +164,9 @@ export default class extends React.Component {
                   <div class="col-md-12">
                     <Effects change={this.handleChange.bind(this)} check={this.handleCheck.bind(this)} effects={this.state.effects} />
                   </div>
-
                   <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary right" />
                   </div>
-
                 </div>
               </fieldset>
             </form>

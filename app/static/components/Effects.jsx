@@ -7,7 +7,7 @@ export default class extends React.Component {
       const {change, check, effects} = this.props;
       return (
         <div class="row">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs row">
               <li class="active"><a href="#enhance" data-toggle="tab" aria-expanded="false">Enhance</a></li>
               <li class=""><a href="/#filter" data-toggle="tab" aria-expanded="false">Filter</a></li>
               <li class=""><a href="/#transform" data-toggle="tab" aria-expanded="false">Tranform</a></li>
@@ -40,7 +40,6 @@ export default class extends React.Component {
                   <CheckboxField id="black_and_white" label="Black and White" value={effects.transform.black_and_white} check={check} type="transform" />
                   <CheckboxField id="equalize" label="Equalize" value={effects.transform.equalize} check={check} type="transform" />
               </div>
-
              <div class="tab-pane fade " id="effects">
                   <RangeField id="quantize" label="Quantize" value={effects.effect.quantize} check={check} change={change} type="effect" />
                   <RangeField id="gaussian_blur" label="Gaussian Blur" value={effects.effect.gaussian_blur} check={check} change={change} type="effect" />
@@ -51,11 +50,9 @@ export default class extends React.Component {
                   <RangeField id="remove_border" label="Zoom" value={effects.effect.remove_border} check={check} change={change} type="effect" />
                   <RangeField id="rotate" label="Rotate" value={effects.effect.rotate} check={check} change={change} type="effect" />
               </div>
-
              <div class="tab-pane fade " id="other">
                 <p>Overlay here</p>
               </div>
-
             </div>
         </div>
       );

@@ -1,7 +1,7 @@
 import React from 'react';
 import Notifications from 'react-notify-toast';
 import SideNav from '../SideNav';
-import Buttons from '../Buttons';
+import Subnav from '../Subnav';
 import Nav from '../Nav';
 import DetailModal from '../DetailModal';
 import FolderModal from '../FolderModal';
@@ -19,7 +19,7 @@ export default class extends React.Component {
          <Notifications />
           <Nav user={ this.state.user }/>
           <div class="container">
-            <Buttons />
+            <Subnav />
             <hr/>
              <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-3 line-right no-pad">

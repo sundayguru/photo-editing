@@ -1,7 +1,7 @@
 import React from 'react';
 import BackgroundSlider from '../BackgroundSlider';
-import LoginForm from '../LoginForm';
-import RegisterForm from '../RegisterForm';
+import LoginForm from '../forms/LoginForm';
+import RegisterForm from '../forms/RegisterForm';
 import SocialButtons from '../SocialButtons';
 
 export default class extends React.Component {
@@ -25,7 +25,6 @@ export default class extends React.Component {
                                     <RegisterForm />
                                 </div>
                             </div>
-
                             <SocialButtons />
                         </div>
                     </div>

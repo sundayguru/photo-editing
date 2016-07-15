@@ -45,7 +45,6 @@ class FolderStore extends EventEmitter {
         this.emit('selectFolder', {id: id});
     }
 
-
     handlerAction(action){
         switch(action.type){
             case 'NEW_FOLDER':

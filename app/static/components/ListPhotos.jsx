@@ -7,7 +7,6 @@ import ReactPaginate from 'react-paginate';
 import PhotoThumb from './PhotoThumb';
 
 export default class extends React.Component {
-
     getNext(data){
         var page = data.selected + 1;
         store.getAll(page);
@@ -25,7 +24,6 @@ export default class extends React.Component {
     componentWillUnmount(){
       store.removeListener('photos', this.listPhotos);
     }
-
 
     listPhotos(data){
       this.setState({

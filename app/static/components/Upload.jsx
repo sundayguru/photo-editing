@@ -13,11 +13,9 @@ export default class extends React.Component {
       this.detail = this.detail.bind(this);
       this.uploadComplete = this.uploadComplete.bind(this);
       this.onDrop = this.onDrop.bind(this);
-
     }
 
     componentWillMount(){
-
       storeFolder.on('singleFolder', this.detail);
       storePhoto.on('newPhoto', this.uploadComplete);
       var activeFolderId = this.props.params.id;
@@ -61,8 +59,8 @@ export default class extends React.Component {
     render() {
         return (
           <div>
-              <Loader loaded={this.state.loaded} top="73%" />
-             <div class="col-md-12 upload">
+           <Loader loaded={this.state.loaded} top="73%" />
+           <div class="col-md-12 upload">
               <p>Upload folder: <small> {this.state.folder} </small></p>
               <Dropzone onDrop={this.onDrop} accept="image/*" multiple={false}>
                 <div>Drag and drop an image here, or click to select image to upload.</div>

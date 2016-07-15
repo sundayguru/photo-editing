@@ -7,7 +7,6 @@ from rest_framework.serializers import (
 )
 
 from photos.models import *
-import cloudinary
 
 
 class UserSerializer(ModelSerializer):
@@ -36,6 +35,7 @@ class UserSerializer(ModelSerializer):
 
 class FolderSerializer(ModelSerializer):
     photos = SerializerMethodField()
+
     class Meta:
         model = Folder
         fields = [
@@ -48,7 +48,6 @@ class FolderSerializer(ModelSerializer):
         ]
         extra_kwargs = {'date_created': {'read_only': True},
                         'date_modified': {'read_only': True}}
-
 
     def get_photos(self, obj):
         serialized_photos = []
@@ -98,7 +97,6 @@ class PhotoSerializer(ModelSerializer):
         extra_kwargs = {'date_created': {'read_only': True},
                         'date_modified': {'read_only': True}}
 
-
     def get_folder_name(self, obj):
         try:
             return obj.folder.name
@@ -114,6 +112,6 @@ class PhotoSerializer(ModelSerializer):
     def get_detail(self, obj):
         detail = PhotoDetail.objects.filter(photo=obj).first()
         if(not detail):
-            return {};
+            return {}
         serializer = PhotoDetailSerializer(detail)
         return serializer.data

@@ -1,11 +1,6 @@
 import React from 'react';
 
 export default class extends React.Component {
-    constructor() {
-      super();
-
-    }
-
     render() {
      const {user_active_class, user} = this.props;
         return (
@@ -20,7 +15,6 @@ export default class extends React.Component {
               </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
-
               <ul class={ "nav navbar-nav navbar-right " + user_active_class }>
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"> <i class="mdi mdi-account"></i> { user }<span class="caret"></span></a>
@@ -29,9 +23,6 @@ export default class extends React.Component {
                   </ul>
                 </li>
               </ul>
-
-
-
             </div>
           </div>
         </div>
