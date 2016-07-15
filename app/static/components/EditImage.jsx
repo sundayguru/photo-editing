@@ -3,6 +3,7 @@ import storePhoto from './store/PhotoStore';
 import Loader from 'react-loader';
 import * as Toast from './actions/ToastAction';
 import Effects from './Effects';
+import ShareButtons from './ShareButtons';
 
 export default class extends React.Component {
     constructor() {
@@ -144,6 +145,7 @@ export default class extends React.Component {
     }
 
     render() {
+      const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.share_code;
         return (
          <div class="col-md-12">
             <h3>Image Preview </h3>
@@ -151,7 +153,12 @@ export default class extends React.Component {
               <fieldset>
                 <div class="col-md-6 no-pad-left">
                   <div class="image-preview">
-                  <input type="text" disabled={true} value={ "Share Link: " + document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.share_code } class="col-lg-12" />
+                  <div class="col-lg-12 no-pad">
+                    <input type="text" disabled={true}
+                      value={ "Share Link: " + share_link }
+                      class="col-lg-11 no-pad" />
+                      <ShareButtons share_link={share_link} />
+                  </div>
                     <Loader loaded={this.state.loaded} top="50%" left="50%" />
                     <a href={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="preview" title="Zoom" >
                       <img src={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="img-responsive" />
