@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^logout/$', views.logout_view),
+    url(r'^test/$', views.test),
     url(r'^api/v1/', include('photos.api.urls', namespace="api")),
 ]
 

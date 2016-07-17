@@ -5,7 +5,7 @@ from rest_framework.serializers import (
     HyperlinkedIdentityField,
     SerializerMethodField,
 )
-
+import cloudinary.api
 from photos.models import *
 
 
@@ -66,6 +66,8 @@ class PhotoDetailSerializer(ModelSerializer):
             'id',
             'title',
             'effects',
+            'edited_image',
+            'share_code',
             'date_created',
             'date_modified',
         ]
@@ -76,6 +78,7 @@ class PhotoDetailSerializer(ModelSerializer):
 class PhotoSerializer(ModelSerializer):
     detail = SerializerMethodField()
     folder_name = SerializerMethodField()
+    image_url = SerializerMethodField()
     uploader = SerializerMethodField()
     file_size = SerializerMethodField()
 
@@ -83,19 +86,16 @@ class PhotoSerializer(ModelSerializer):
         model = Photo
         fields = [
             'id',
+            'image_url',
             'image',
-            'edited_image',
             'folder_name',
-            'share_code',
             'detail',
             'uploader',
             'file_size',
             'user',
             'date_created',
-            'date_modified',
         ]
-        extra_kwargs = {'date_created': {'read_only': True},
-                        'date_modified': {'read_only': True}}
+        extra_kwargs = {'date_created': {'read_only': True}}
 
     def get_folder_name(self, obj):
         try:
@@ -106,8 +106,12 @@ class PhotoSerializer(ModelSerializer):
     def get_uploader(self, obj):
         return obj.user.username
 
+    def get_image_url(self, obj):
+        return obj.image.url
+
     def get_file_size(self, obj):
-        return int(obj.image.size/1000)
+        detail = cloudinary.api.resource(obj.image.public_id)
+        return int(detail.get('bytes', -1) / 1000)
 
     def get_detail(self, obj):
         detail = PhotoDetail.objects.filter(photo=obj).first()

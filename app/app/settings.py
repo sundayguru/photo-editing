@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
+import cloudinary
 import os
 from django_envie.workroom import convertfiletovars
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -55,6 +55,11 @@ INSTALLED_APPS = [
     'photos',
 ]
 
+cloudinary.config(
+  cloud_name = "dfsbzqadc",
+  api_key = "927822459139272",
+  api_secret = "TjOmm1YYA1rU8JmK8be4LT_6ocg"
+)
 
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

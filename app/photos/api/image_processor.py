@@ -5,7 +5,7 @@ class ImageProcessor:
 
     def __init__(self, photo):
         self.image = photo.image
-        self.image_editor = ImageEdit(photo.image.path)
+        self.image_editor = ImageEdit(photo.image.url)
 
     def process(self, effect_obj):
         for effect_type in effect_obj:

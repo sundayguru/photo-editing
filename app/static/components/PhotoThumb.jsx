@@ -66,8 +66,9 @@ export default class extends React.Component {
   }
 
   render() {
-      var {edited_image, image, id, share_code, detail} = this.props;
+      var {image_url, id, share_code, detail} = this.props;
       this.id = id;
+      const image = detail.edited_image ? "data:image/jpeg;base64, " + detail.edited_image : image_url;
        const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + share_code;
       return (
         <div class="col-sm-4 col-md-3">
@@ -75,8 +76,8 @@ export default class extends React.Component {
           <div class="thumbnail">
             <Options editLink={ "editimage/" + id } deleteMethod={this.deleteImage.bind(this)} id={id} type={"image"} />
             <div class="crop">
-              <a href={edited_image ? edited_image + "?" + (new Date().getTime()) : image} class="preview" title={detail.title} >
-                <img src={edited_image ? edited_image + "?" +(new Date().getTime())  : image} alt={detail.title} />
+              <a href={image} class="preview" title={detail.title} >
+                <img src={image} alt={detail.title} />
               </a>
             </div>
             <div class="caption">

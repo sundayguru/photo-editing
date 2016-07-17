@@ -43,7 +43,7 @@ export default class extends React.Component {
 
     render() {
         const folders = this.state.folders.map((item) => { return <FolderThumb key={item.id} {...item} /> });
-        if(!folders.length){
+        if(!folders.length && this.state.loaded){
           return (
             <Empty title="No folder found" />
           )
@@ -56,7 +56,7 @@ export default class extends React.Component {
         return (
          <div class="row">
           <div class="col-md-12">
-            <Loader loaded={this.state.loaded} top="75%" />
+            <Loader loaded={this.state.loaded} top="200px" />
             {folders}
             </div>
             <div class="col-md-12">

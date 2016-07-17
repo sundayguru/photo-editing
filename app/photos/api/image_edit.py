@@ -5,6 +5,8 @@ from PIL import (
     ImageFont
 )
 import base64
+import requests
+from StringIO import StringIO
 import cStringIO
 import os
 
@@ -33,7 +35,12 @@ class ImageEdit:
             self.image = Image.open(path)
             self.output = self.image
         except:
-            raise ValueError('Unable to open specified image path')
+            try:
+                response = requests.get(path)
+                self.image = Image.open(StringIO(response.content))
+                self.output = self.image
+            except:
+                raise ValueError('Unable to open specified image path')
 
     def convert(self, mode="RGB"):
         self.output = self.output.convert(mode)

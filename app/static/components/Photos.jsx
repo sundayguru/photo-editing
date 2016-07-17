@@ -25,7 +25,7 @@ export default class extends React.Component {
       this.state = {
         loaded:false,
         photos:[],
-        folder_id: folder_id ? folder_id : 0
+        folder_id: folder_id ? folder_id : undefined
       }
       store.on('photos', this.listPhotos);
       store.getAll(1, folder_id);
@@ -47,7 +47,7 @@ export default class extends React.Component {
 
     render() {
         const photos = this.state.photos.map((item) => { return <PhotoThumb key={item.id} folder_id={this.state.folder_id} {...item}/> });
-        if(!photos.length){
+        if(!photos.length && this.state.loaded){
           return (
             <Empty title="No image found" />
           )
@@ -58,8 +58,8 @@ export default class extends React.Component {
         }
         return (
           <div class="row">
+            <Loader loaded={this.state.loaded} top="200px" />
             <div class="col-md-12">
-              <Loader loaded={this.state.loaded} top="75%" />
               {photos}
             </div>
             <div class="col-md-12">

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 
 class Folder(models.Model):
@@ -25,12 +26,10 @@ class Folder(models.Model):
 class Photo(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     folder = models.ForeignKey(Folder, null=True, blank=True)
-    image = models.ImageField(upload_to='main',
-        null=True,
-        blank=True)
-    edited_image = models.CharField(max_length=255, default="")
-    share_code = models.CharField(max_length=50, default="")
-    date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+    image = CloudinaryField('image')
+    # image = models.ImageField(upload_to='main',
+    #     null=True,
+    #     blank=True)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     class Meta:
@@ -41,6 +40,8 @@ class PhotoDetail(models.Model):
     photo = models.ForeignKey(Photo, default=0)
     title = models.CharField(max_length=100, default="")
     effects = models.TextField(default='')
+    edited_image = models.TextField(default="")
+    share_code = models.CharField(max_length=50, default="")
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
 

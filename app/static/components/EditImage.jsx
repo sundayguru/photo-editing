@@ -145,7 +145,9 @@ export default class extends React.Component {
     }
 
     render() {
-      const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.share_code;
+
+      const image = this.state.file.detail && this.state.file.detail.edited_image ? "data:image/jpeg;base64, " + this.state.file.detail.edited_image : this.state.file.image_url;
+      const share_link = this.state.file.detail ? document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.detail.share_code : '';
         return (
          <div class="col-md-12">
             <h3>Image Preview </h3>
@@ -160,8 +162,8 @@ export default class extends React.Component {
                       <ShareButtons share_link={share_link} />
                   </div>
                     <Loader loaded={this.state.loaded} top="50%" left="50%" />
-                    <a href={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="preview" title="Zoom" >
-                      <img src={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="img-responsive" />
+                    <a href={image} class="preview" title="Zoom" >
+                      <img src={image} class="img-responsive" />
                     </a>
                   </div>
                 </div>

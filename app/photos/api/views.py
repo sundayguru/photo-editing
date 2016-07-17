@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
-import json, os
+import json, os, cloudinary
 import time
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -76,9 +76,9 @@ class PhotoShare(View):
         share_id = request.GET.get('share_id', None)
         response_data = {}
         if share_id:
-            photo = Photo.objects.filter(share_code=share_id).first()
-            if photo:
-                serializer = PhotoSerializer(photo)
+            detail = PhotoDetail.objects.filter(share_code=share_id).first()
+            if detail:
+                serializer = PhotoSerializer(detail.photo)
                 response_data = serializer.data
 
         response_json = json.dumps(response_data)
@@ -144,11 +144,11 @@ class PhotoApiView(ListCreateAPIView):
         code = int(time.time())
         if folder is not None:
             instance = serializer.save(
-                user=self.request.user, folder=folder, share_code=code)
+                user=self.request.user, folder=folder)
         else:
-            instance = serializer.save(user=self.request.user, share_code=code)
+            instance = serializer.save(user=self.request.user)
 
-        detail = PhotoDetail(photo=instance)
+        detail = PhotoDetail(photo=instance, share_code=code)
         detail.save()
 
     def get_queryset(self):
@@ -214,12 +214,7 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
     def perform_destroy(self, instance):
-        if(os.path.isfile(instance.image.path)):
-            os.remove(instance.image.path)
-
-        if(os.path.isfile(instance.image.path.replace('main', 'edited'))):
-            os.remove(instance.image.path.replace('main', 'edited'))
-
+        cloudinary.api.delete_resources([instance.image.public_id])
         instance.delete()
 
 
@@ -247,14 +242,12 @@ class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        photo = instance.photo
-        image_processor = ImageProcessor(photo)
+        image_processor = ImageProcessor(instance.photo)
         if instance.effects:
             effect_obj = json.loads(instance.effects)
             image_processor.process(effect_obj)
-            edited_path = image_processor.save()
-            photo.edited_image = edited_path
-            photo.save()
+            instance.edited_image = image_processor.preview()
+            instance.save()
 
     def get_queryset(self):
         photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()
