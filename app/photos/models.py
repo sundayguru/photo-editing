@@ -41,6 +41,7 @@ class PhotoDetail(models.Model):
     title = models.CharField(max_length=100, default="")
     effects = models.TextField(default='')
     edited_image = models.TextField(default="")
+    image_size = models.CharField(max_length=20, default=0)
     share_code = models.CharField(max_length=50, default="")
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)

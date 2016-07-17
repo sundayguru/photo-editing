@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
 import json, os, cloudinary
+import cloudinary.api
 import time
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -148,7 +149,9 @@ class PhotoApiView(ListCreateAPIView):
         else:
             instance = serializer.save(user=self.request.user)
 
-        detail = PhotoDetail(photo=instance, share_code=code)
+        image_detail = cloudinary.api.resource(instance.image.public_id)
+        image_size =  int(image_detail.get('bytes', -1) / 1000)
+        detail = PhotoDetail(photo=instance, share_code=code, image_size=image_size)
         detail.save()
 
     def get_queryset(self):
