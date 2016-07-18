@@ -169,7 +169,7 @@ class ImageEdit:
         path = self.path.replace('main', 'edited')
         edit_path = os.path.join(
             os.path.dirname(os.path.dirname(
-                os.path.dirname(__file__))), 'media_cdn/edited')
+                os.path.dirname(__file__))), 'media/edited')
         if not os.path.exists(edit_path):
             os.makedirs(edit_path)
         self.output.save(path, format=self.image_format)

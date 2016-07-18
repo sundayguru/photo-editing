@@ -107,7 +107,7 @@ class PhotoSerializer(ModelSerializer):
         return obj.user.username
 
     def get_file_size(self, obj):
-        return int(obj.image.size/1000)
+        return 0 #int(obj.image.size/1000)
 
     def get_detail(self, obj):
         detail = PhotoDetail.objects.filter(photo=obj).first()
