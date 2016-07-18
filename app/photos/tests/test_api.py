@@ -122,10 +122,9 @@ class PhotoTest(APITestCase):
         response = create_photo(self.client)
         result = decode_json(response)
         photo_id = result.get('id', 0)
-        detail_id = result.get('detail', {}).get('id', 0)
-        response = self.client.put('/api/v1/photos/' + str(photo_id) + '/detail/' + str(detail_id) + '/', {'title':'test image'})
+        response = self.client.put('/api/v1/photos/' + str(photo_id) + '/', {'title':'test image'})
         result = decode_json(response)
-        self.assertEqual(result.get('id'), detail_id)
+        self.assertEqual(result.get('id'), photo_id)
         self.assertEqual(result.get('title'), 'test image')
 
     def test_photo_delete(self):
@@ -163,12 +162,11 @@ class PhotoTest(APITestCase):
         response = create_photo(self.client)
         result = decode_json(response)
         photo_id = result.get('id', 0)
-        detail_id = result.get('detail', {}).get('id', 0)
         data = {
             'title':'effect update',
             'effects':'{"enhance":{"Brightness":"65"},"filter":{"blur":"true"},"transform":{"mirror":"true"},"effect":{"quantize":"50","gaussian_blur":"50","auto_contrast":"50","posterize":"50","unsharp_mask":"50","solarize":"50","remove_border":"50","rotate":"50"}}'
         }
-        response = self.client.put('/api/v1/photos/' + str(photo_id) + '/detail/' + str(detail_id) + '/', data)
+        response = self.client.put('/api/v1/photos/' + str(photo_id) + '/', data)
         result = decode_json(response)
         self.assertEqual(result.get('title'), 'effect update')
 
@@ -176,7 +174,6 @@ class PhotoTest(APITestCase):
         response = create_photo(self.client)
         result = decode_json(response)
         photo_id = result.get('id', 0)
-        detail_id = result.get('detail', {}).get('id', 0)
         data = {
             'photo_id':photo_id,
             'effects':'{"transform":{"vertical_flip":"true","invert":"true","grayscale":"true","black_and_white":"true","equalize":"true"}}'

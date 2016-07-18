@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^photos/$', PhotoApiView.as_view(), name='list-photo'),
     url(r'^photos/(?P<id>\d+)/$', SinglePhotoAPIView.as_view(), name='photo-single'),
     url(r'^photos/share/$', PhotoShare.as_view(), name='photo-share'),
-    url(r'^photos/(?P<id>\d+)/detail/(?P<pk>\d+)/$', PhotoDetailAPIView.as_view(), name='photo-detail'),
+    #url(r'^photos/(?P<id>\d+)/detail/(?P<pk>\d+)/$', PhotoDetailAPIView.as_view(), name='photo-detail'),
     url(r'^photos/(?P<id>\d+)/preview/$', PhotoPreview.as_view(), name='photo-preview'),
 ]

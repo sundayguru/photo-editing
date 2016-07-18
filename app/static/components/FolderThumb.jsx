@@ -39,7 +39,7 @@ export default class extends React.Component {
   }
 
   render() {
-      var {name, id, photos} = this.props;
+      var {name, id, photos, pageNum} = this.props;
       this.id = id;
       return (
          <div class="col-sm-4 col-md-3">

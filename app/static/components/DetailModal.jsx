@@ -19,13 +19,13 @@ export default class extends React.Component {
 
     photoDetail(data){
       this.infoElement = <PhotoInfo data={data.data} />;
-      this.setState({title: data.data.folder_name + ' - ' + data.data.detail.title});
+      this.setState({title: data.data.folder_name + ' - ' + data.data.title});
     }
 
     componentWillMount(){
       this.state = {title:''};
       storeFolder.on('singleFolder', this.folderDetail);
-      storePhoto.on('singlePhoto', this.photoDetail);
+      storePhoto.on('photo', this.photoDetail);
     }
 
     componentWillUnmount(){

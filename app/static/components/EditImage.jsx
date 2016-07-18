@@ -18,10 +18,10 @@ export default class extends React.Component {
       this.state = {loaded: false, file:{}, effects:this.defaultEffects};
       const {id} = this.props.params;
       this.id = id;
-      storePhoto.get(id);
       storePhoto.on('updatePhoto', this.updateComplete);
       storePhoto.on('previewPhoto', this.previewComplete);
-      storePhoto.on('singlePhoto', this.detail);
+      storePhoto.on('photo', this.detail);
+      storePhoto.get(id);
     }
 
     componentDidMount(){
@@ -45,13 +45,13 @@ export default class extends React.Component {
     componentWillUnmount(){
       storePhoto.removeListener('updatePhoto', this.updateComplete);
       storePhoto.removeListener('previewPhoto', this.previewComplete);
-      storePhoto.removeListener('singlePhoto', this.detail);
+      storePhoto.removeListener('photo', this.detail);
     }
 
     detail(result){
       if(result.status == 200){
-        var title = result.data.detail ? result.data.detail.title : ''
-        var effects = result.data.detail.effects ? this.decodeEffects(result.data.detail.effects) : this.defaultEffects;
+        var title = result.data.title;
+        var effects = result.data.effects ? this.decodeEffects(result.data.effects) : this.defaultEffects;
         this.setState({file: result.data, loaded: true, effects: effects});
         $('#title').val(title);
       }
@@ -131,7 +131,7 @@ export default class extends React.Component {
     getFormData(){
       var form = new FormData();
       form.append('photo_id', this.id);
-      form.append('id', this.state.file.detail.id ? this.state.file.detail.id : 0);
+      form.append('id', this.state.file.id ? this.state.file.id : 0);
       form.append('effects', JSON.stringify(this.state.effects));
       form.append('title', $('#title').val());
       return form;
@@ -146,6 +146,7 @@ export default class extends React.Component {
 
     render() {
       const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + this.state.file.share_code;
+      var image_src = this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image;
         return (
          <div class="col-md-12">
             <h3>Image Preview </h3>
@@ -160,15 +161,15 @@ export default class extends React.Component {
                       <ShareButtons share_link={share_link} />
                   </div>
                     <Loader loaded={this.state.loaded} top="50%" left="50%" />
-                    <a href={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="preview" title="Zoom" >
-                      <img src={this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image} class="img-responsive" />
+                    <a href={ image_src } class="preview" title="Zoom" >
+                      <img src={ image_src } class="img-responsive" />
                     </a>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label" for="title">Title</label>
-                    <input type="text" class="form-control" id="title" defaultValue={this.state.file.image} />
+                    <input type="text" class="form-control" id="title" />
                   </div>
                   <div class="col-md-12">
                     <Effects change={this.handleChange.bind(this)} check={this.handleCheck.bind(this)} effects={this.state.effects} />

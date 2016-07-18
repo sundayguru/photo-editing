@@ -5,7 +5,6 @@ from rest_framework.serializers import (
     HyperlinkedIdentityField,
     SerializerMethodField,
 )
-
 from photos.models import *
 
 
@@ -58,36 +57,20 @@ class FolderSerializer(ModelSerializer):
         return serialized_photos
 
 
-class PhotoDetailSerializer(ModelSerializer):
-
-    class Meta:
-        model = PhotoDetail
-        fields = [
-            'id',
-            'title',
-            'effects',
-            'date_created',
-            'date_modified',
-        ]
-        extra_kwargs = {'date_created': {'read_only': True},
-                        'date_modified': {'read_only': True}}
-
-
 class PhotoSerializer(ModelSerializer):
-    detail = SerializerMethodField()
     folder_name = SerializerMethodField()
     uploader = SerializerMethodField()
-    file_size = SerializerMethodField()
 
     class Meta:
         model = Photo
         fields = [
             'id',
             'image',
+            'title',
             'edited_image',
             'folder_name',
             'share_code',
-            'detail',
+            'effects',
             'uploader',
             'file_size',
             'user',
@@ -105,13 +88,3 @@ class PhotoSerializer(ModelSerializer):
 
     def get_uploader(self, obj):
         return obj.user.username
-
-    def get_file_size(self, obj):
-        return int(obj.image.size/1000)
-
-    def get_detail(self, obj):
-        detail = PhotoDetail.objects.filter(photo=obj).first()
-        if(not detail):
-            return {}
-        serializer = PhotoDetailSerializer(detail)
-        return serializer.data

@@ -12,7 +12,7 @@ class PhotoStore extends EventEmitter {
 
     update(content){
         var _this = this;
-        request.put('/api/v1/photos/' + content.get('photo_id') + '/detail/' + content.get('id') + '/', content, (err, result) => {
+        request.put('/api/v1/photos/' + content.get('photo_id') + '/', content, (err, result) => {
             _this.emit('updatePhoto', {status: result.status, data: JSON.parse(result.text) });
         });
     }
@@ -47,14 +47,14 @@ class PhotoStore extends EventEmitter {
     get(id){
         var _this = this;
         request.get('/api/v1/photos/' + id + '/', (err, result) => {
-            _this.emit('singlePhoto', {status: result.status, data: JSON.parse(result.text) });
+            _this.emit('photo', {status: result.status, data: JSON.parse(result.text) });
         });
     }
 
     getShare(share_id){
         var _this = this;
         request.get('/api/v1/photos/share/?share_id=' + share_id, (err, result) => {
-            _this.emit('singlePhoto', {status: result.status, data: JSON.parse(result.text) });
+            _this.emit('sharePhoto', {status: result.status, data: JSON.parse(result.text) });
         });
     }
 
