@@ -115,6 +115,31 @@ class FolderApiView(ListCreateAPIView):
         return queryset
 
 
+class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
+
+    """
+    Returns individual folder detail if you are doing a GET request.
+    Updates individual folder detail if you are doing a PUT request.
+    Deletes individual folder detail if you are doing a DELETE request.
+
+    Method: GET
+    Response: JSON
+
+    Method: PUT
+      Parameters:
+          name  (required)
+      Response: JSON
+
+    Method: DELETE
+        Response: JSON
+
+    """
+    queryset = Folder.objects.all()
+    serializer_class = FolderSerializer
+    permission_classes = [IsOwner]
+    lookup_field = 'id'
+
+
 class PhotoApiView(ListCreateAPIView):
 
     """
@@ -147,9 +172,8 @@ class PhotoApiView(ListCreateAPIView):
                 user=self.request.user, folder=folder, share_code=code)
         else:
             instance = serializer.save(user=self.request.user, share_code=code)
-
-        detail = PhotoDetail(photo=instance)
-        detail.save()
+        instance.file_size = int(instance.image.size/1000)
+        instance.save()
 
     def get_queryset(self):
         folder_id = self.kwargs.get('id', -1)
@@ -162,31 +186,6 @@ class PhotoApiView(ListCreateAPIView):
         else:
             queryset = Photo.objects.filter(user=self.request.user)
         return queryset
-
-
-class SingleFolderAPIView(RetrieveUpdateDestroyAPIView):
-
-    """
-    Returns individual folder detail if you are doing a GET request.
-    Updates individual folder detail if you are doing a PUT request.
-    Deletes individual folder detail if you are doing a DELETE request.
-
-    Method: GET
-    Response: JSON
-
-    Method: PUT
-      Parameters:
-          name  (required)
-      Response: JSON
-
-    Method: DELETE
-        Response: JSON
-
-    """
-    queryset = Folder.objects.all()
-    serializer_class = FolderSerializer
-    permission_classes = [IsOwner]
-    lookup_field = 'id'
 
 
 class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
@@ -213,49 +212,20 @@ class SinglePhotoAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwner]
     lookup_field = 'id'
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        image_processor = ImageProcessor(instance)
+        if instance.effects:
+            effect_obj = json.loads(instance.effects)
+            image_processor.process(effect_obj)
+            edited_path = image_processor.save()
+            instance.edited_image = edited_path
+            instance.save()
+
     def perform_destroy(self, instance):
         if(os.path.isfile(instance.image.path)):
             os.remove(instance.image.path)
 
         if(os.path.isfile(instance.image.path.replace('main', 'edited'))):
             os.remove(instance.image.path.replace('main', 'edited'))
-
         instance.delete()
-
-
-class PhotoDetailAPIView(RetrieveUpdateDestroyAPIView):
-
-    """
-    Returns individual photo detail if you are doing a GET request.
-    Updates individual photo detail if you are doing a PUT request.
-    Deletes individual photo detail if you are doing a DELETE request.
-
-    Method: GET
-    Response: JSON
-
-    Method: PUT
-      Parameters:
-          title  (required)
-      Response: JSON
-
-    Method: DELETE
-        Response: JSON
-
-    """
-    serializer_class = PhotoDetailSerializer
-    lookup_field = 'pk'
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        photo = instance.photo
-        image_processor = ImageProcessor(photo)
-        if instance.effects:
-            effect_obj = json.loads(instance.effects)
-            image_processor.process(effect_obj)
-            edited_path = image_processor.save()
-            photo.edited_image = edited_path
-            photo.save()
-
-    def get_queryset(self):
-        photo = Photo.objects.filter(id=self.kwargs.get('id', 0)).first()
-        return PhotoDetail.objects.filter(photo=photo)

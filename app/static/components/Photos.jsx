@@ -13,8 +13,7 @@ export default class extends React.Component {
     }
 
     getNext(data){
-        var page = data.selected + 1;
-        store.getAll(page, this.state.folder_id);
+        store.getAll(data.selected + 1, this.state.folder_id);
     }
 
     componentWillMount(){
@@ -46,12 +45,13 @@ export default class extends React.Component {
     }
 
     render() {
-        const photos = this.state.photos.map((item) => { return <PhotoThumb key={item.id} folder_id={this.state.folder_id} {...item}/> });
-        if(!photos.length){
+        const photos = this.state.photos.map((item) => { return <PhotoThumb key={item.id} folder_id={this.state.folder_id} {...item} /> });
+        if(!photos.length && this.state.loaded){
           return (
             <Empty title="No image found" />
           )
         }
+
         var paginate = '';
         if(this.state.next || this.state.previous){
           paginate = <ReactPaginate pageNum={this.state.count/8} pageRangeDisplayed={8} marginPagesDisplayed={8} containerClassName={"pagination pagination-sm right"} clickCallback={this.getNext} />;

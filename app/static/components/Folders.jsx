@@ -27,8 +27,7 @@ export default class extends React.Component {
     }
 
     getNext(data){
-        var page = data.selected + 1;
-        store.getAll(page);
+        store.getAll(data.selected + 1);
     }
 
     complete(data){
@@ -43,7 +42,7 @@ export default class extends React.Component {
 
     render() {
         const folders = this.state.folders.map((item) => { return <FolderThumb key={item.id} {...item} /> });
-        if(!folders.length){
+        if(!folders.length && this.state.loaded){
           return (
             <Empty title="No folder found" />
           )

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
 import Options from './Options';
 import ShareButtons from './ShareButtons';
@@ -66,8 +67,9 @@ export default class extends React.Component {
   }
 
   render() {
-      var {edited_image, image, id, share_code, detail} = this.props;
+      var {edited_image, image, id, share_code, title, page} = this.props;
       this.id = id;
+      var image_src = edited_image ? edited_image + "?" + (new Date().getTime()) : image;
        const share_link = document.location.protocol + '//' + document.location.host + '/#/share/' + share_code;
       return (
         <div class="col-sm-4 col-md-3">
@@ -75,12 +77,12 @@ export default class extends React.Component {
           <div class="thumbnail">
             <Options editLink={ "editimage/" + id } deleteMethod={this.deleteImage.bind(this)} id={id} type={"image"} />
             <div class="crop">
-              <a href={edited_image ? edited_image + "?" + (new Date().getTime()) : image} class="preview" title={detail.title} >
-                <img src={edited_image ? edited_image + "?" +(new Date().getTime())  : image} alt={detail.title} />
+              <a href={image_src} class="preview" title={title} >
+                <img src={image_src} alt={title} />
               </a>
             </div>
             <div class="caption">
-              <h5>{detail.title.length ? detail.title : 'Untiltled'} <ShareButtons share_link={share_link} /></h5>
+              <h5>{ title ? title : 'Untitled' } <ShareButtons share_link={share_link} /></h5>
             </div>
           </div>
         </div>
