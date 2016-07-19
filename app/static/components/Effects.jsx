@@ -3,6 +3,7 @@ import RangeField from './forms/RangeField';
 import InputField from './forms/InputField';
 import CheckboxField from './forms/CheckboxField';
 import SelectField from './forms/SelectField';
+import ColorField from './forms/ColorField';
 
 export default class extends React.Component {
     constructor(){
@@ -29,7 +30,16 @@ export default class extends React.Component {
               <li><a href="/#filter" data-toggle="tab" aria-expanded="false">Filter</a></li>
               <li><a href="/#transform" data-toggle="tab" aria-expanded="false">Tranform</a></li>
               <li><a href="/#effects" data-toggle="tab" aria-expanded="false">Effects</a></li>
-              <li><a href="/#textLayer" data-toggle="tab" aria-expanded="false">Text Overlay</a></li>
+               <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    More <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                    <li><a href="/#textLayer" data-toggle="tab" aria-expanded="false">Text Overlay</a></li>
+                    <li><a href="#image_colorize" data-toggle="tab">Colorize</a></li>
+                    <li><a href="#image_border" data-toggle="tab">Border</a></li>
+                    </ul>
+                </li>
             </ul>
             <div id="myTabContent" class="tab-content">
               <div class="tab-pane fade active in" id="enhance">
@@ -75,6 +85,10 @@ export default class extends React.Component {
                     <RangeField id="y" label="Vertical Position" value={effects.text_overlay.y} check={check} change={change} type="text_overlay" />
                     <InputField id="color" label="Color Code(Hex)" value={effects.text_overlay.color} check={check} change={change} type="text_overlay" />
                     <SelectField id="font_name" label="Font" value={effects.text_overlay.font_name} check={check} change={change} options={this.fonts} defaultOption="Honey-I-spilt-Verdana.ttf" type="text_overlay" />
+                </div>
+                 <div class="tab-pane fade " id="image_colorize">
+                    <ColorField id="black" label="Black Color" value={effects.colorize.black} check={check} change={change} defaultColor="#000000" type="colorize" />
+                    <ColorField id="white" label="White Color" value={effects.colorize.white} check={check} change={change} defaultColor="#ffffff"  type="colorize" />
                 </div>
             </div>
         </div>

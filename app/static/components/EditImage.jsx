@@ -11,7 +11,8 @@ export default class extends React.Component {
       this.updateComplete = this.updateComplete.bind(this);
       this.previewComplete = this.previewComplete.bind(this);
       this.detail = this.detail.bind(this);
-      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}, 'effect':{}, 'text_overlay':{}};
+      this.changeColor = this.changeColor.bind(this);
+      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}, 'effect':{}, 'text_overlay':{}, 'colorize':{}, 'border':{}};
     }
 
     componentWillMount(){
@@ -21,6 +22,7 @@ export default class extends React.Component {
       storePhoto.on('updatePhoto', this.updateComplete);
       storePhoto.on('previewPhoto', this.previewComplete);
       storePhoto.on('photo', this.detail);
+      storePhoto.on('color', this.changeColor);
       storePhoto.get(id);
     }
 
@@ -46,6 +48,7 @@ export default class extends React.Component {
       storePhoto.removeListener('updatePhoto', this.updateComplete);
       storePhoto.removeListener('previewPhoto', this.previewComplete);
       storePhoto.removeListener('photo', this.detail);
+      storePhoto.removeListener('color', this.changeColor);
     }
 
     detail(result){
@@ -77,6 +80,10 @@ export default class extends React.Component {
       var value = e.target.value;
       var type = $(e.target).attr('data-type');
       this.updateEffect(type, name, value);
+    }
+
+    changeColor(result) {
+      this.updateEffect(result.data.type, result.data.name, result.data.value);
     }
 
     addEffect(type, name, value){

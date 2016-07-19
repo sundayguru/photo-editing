@@ -150,18 +150,6 @@ class ImageEdit:
         draw.text((x, y), text, font=self.font, fill=fill)
         del draw
 
-    def line(self, start_x=0, end_x=100, start_y=0,
-             end_y=100, fill="#fff", width=50):
-        draw = ImageDraw.Draw(self.output)
-        draw.line((start_x, start_y, end_x, end_y), fill=fill, width=width)
-        del draw
-
-    def rectangle(self, start_x=0, end_x=100,
-                  start_y=0, end_y=100, fill="#fff"):
-        draw = ImageDraw.Draw(self.output)
-        draw.rectangle((start_x, start_y, end_x, end_y), fill=fill)
-        del draw
-
     def preview(self):
         buffered = cStringIO.StringIO()
         self.output.save(buffered, format=self.image_format)

@@ -58,6 +58,10 @@ class PhotoStore extends EventEmitter {
         });
     }
 
+    broadcastColor(content){
+        this.emit('color', {data: content });
+    }
+
     handlerAction(action){
         switch(action.type){
             case 'NEW_PHOTO':
@@ -71,6 +75,9 @@ class PhotoStore extends EventEmitter {
             break;
             case 'DELETE_PHOTO':
                 this.delete(action.id);
+            break; 
+            case 'COLOR_CHANGE':
+                this.broadcastColor(action.content);
             break;
         }
     }

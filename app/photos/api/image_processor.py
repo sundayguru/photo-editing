@@ -54,6 +54,11 @@ class ImageProcessor:
         actual_font_size = int(float(font_size)/100 * (int(width)/ 2))
         self.image_editor.text(text, actual_x, actual_y, color, actual_font_size, font_name)
 
+    def colorize(self, effect_data):
+        black = effect_data.get('black','#000')
+        white = effect_data.get('white','#fff')
+        self.image_editor.colorize(black, white)
+
     def effect(self, effect_data):
         for effect_data_type in effect_data:
             method = getattr(self.image_editor, effect_data_type)
