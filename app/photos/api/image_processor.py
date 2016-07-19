@@ -59,6 +59,11 @@ class ImageProcessor:
         white = effect_data.get('white','#fff')
         self.image_editor.colorize(black, white)
 
+    def border(self, effect_data):
+        color = effect_data.get('border_color', '#000')
+        size = effect_data.get('size', 10)
+        self.image_editor.expand(int(size), color)
+
     def effect(self, effect_data):
         for effect_data_type in effect_data:
             method = getattr(self.image_editor, effect_data_type)

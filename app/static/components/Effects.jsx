@@ -89,6 +89,10 @@ export default class extends React.Component {
                  <div class="tab-pane fade " id="image_colorize">
                     <ColorField id="black" label="Black Color" value={effects.colorize.black} check={check} change={change} defaultColor="#000000" type="colorize" />
                     <ColorField id="white" label="White Color" value={effects.colorize.white} check={check} change={change} defaultColor="#ffffff"  type="colorize" />
+                </div>  
+                <div class="tab-pane fade " id="image_border">
+                    <RangeField id="size" label="Size" value={effects.border.size} check={check} change={change} type="border" />
+                    <ColorField id="border_color" label="Border Color" value={effects.border.border_color} check={check} change={change} defaultColor="#000000" type="border" />
                 </div>
             </div>
         </div>

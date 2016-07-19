@@ -105,6 +105,18 @@ class PhotoTest(APITestCase):
         """Set up base user and details for test running."""
         login(self.client)
 
+
+    def photo_effect(self, effects):
+        response = create_photo(self.client)
+        result = decode_json(response)
+        photo_id = result.get('id', 0)
+        data = {
+            'photo_id':photo_id,
+            'effects':effects
+        }
+        response = self.client.post('/api/v1/photos/' + str(photo_id) + '/preview/', data)
+        return decode_json(response)
+
     def test_photo_create_without_folder(self):
         response = create_photo(self.client)
         self.assertEqual(response.status_code, 201)
@@ -172,14 +184,25 @@ class PhotoTest(APITestCase):
 
     def test_photo_effect_preview(self):
         response = create_photo(self.client)
-        result = decode_json(response)
-        photo_id = result.get('id', 0)
-        data = {
-            'photo_id':photo_id,
-            'effects':'{"transform":{"vertical_flip":"true","invert":"true","grayscale":"true","black_and_white":"true","equalize":"true"},"text_overlay":{"textValue":"love is key","fontSize":"26","x":"22","y":"24","color":"#ff3400","font_name":"dahot2.Filxgirl.ttf"}}'
-        }
-        response = self.client.post('/api/v1/photos/' + str(photo_id) + '/preview/', data)
-        result = decode_json(response)
+        result = self.photo_effect('{"transform":{"vertical_flip":"true","invert":"true","grayscale":"true","black_and_white":"true","equalize":"true"}}')
+        self.assertNotEqual(result.get('image'), '')
+        self.assertNotEqual(result.get('image'), None)
+
+    def test_photo_effect_text_overlay(self):
+        response = create_photo(self.client)
+        result = self.photo_effect('{"text_overlay":{"textValue":"love is key","fontSize":"26","x":"22","y":"24","color":"#ff3400","font_name":"dahot2.Filxgirl.ttf"}}')
+        self.assertNotEqual(result.get('image'), '')
+        self.assertNotEqual(result.get('image'), None)
+
+    def test_photo_effect_colorize(self):
+        response = create_photo(self.client)
+        result = self.photo_effect('{"colorize":{"black":"#5f1212","white":"#8b572a"}}')
+        self.assertNotEqual(result.get('image'), '')
+        self.assertNotEqual(result.get('image'), None)
+
+    def test_photo_effect_border(self):
+        response = create_photo(self.client)
+        result = self.photo_effect('{"border":{"size":"26","border_color":"#ff3737"}}')
         self.assertNotEqual(result.get('image'), '')
         self.assertNotEqual(result.get('image'), None)
 
