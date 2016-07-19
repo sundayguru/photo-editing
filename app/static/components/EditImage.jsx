@@ -11,7 +11,7 @@ export default class extends React.Component {
       this.updateComplete = this.updateComplete.bind(this);
       this.previewComplete = this.previewComplete.bind(this);
       this.detail = this.detail.bind(this);
-      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}, 'effect':{}};
+      this.defaultEffects = {'enhance':{}, 'filter':{}, 'transform':{}, 'effect':{}, 'text_overlay':{}};
     }
 
     componentWillMount(){
@@ -107,6 +107,7 @@ export default class extends React.Component {
     }
 
     decodeEffects(effectString){
+      console.log(effectString);
       var effects = JSON.parse(effectString);
       for(var singleEffect in effects){
         for(var effect_type in effects[singleEffect]){

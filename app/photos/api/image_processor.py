@@ -11,9 +11,12 @@ class ImageProcessor:
         for effect_type in effect_obj:
             effect_data = effect_obj[effect_type]
             if(effect_data):
-                editor_method = getattr(self, effect_type)
-                if editor_method:
-                    editor_method(effect_data)
+                try:
+                    editor_method = getattr(self, effect_type)
+                    if editor_method:
+                        editor_method(effect_data)
+                except:
+                    pass
 
     def preview(self):
         return self.image_editor.preview()
@@ -36,6 +39,20 @@ class ImageProcessor:
             method = getattr(self.image_editor, effect_data_type)
             if method:
                 method()
+
+    def text_overlay(self, effect_data):
+        height = self.image._get_height()
+        width = self.image._get_width()
+        x = effect_data.get('x', 50)
+        y = effect_data.get('y', 50)
+        font_size = effect_data.get('fontSize', 50)
+        text = effect_data.get('textValue', 'Hello')
+        color = effect_data.get('color', '#000')
+        font_name = effect_data.get('font_name', 'Honey-I-spilt-Verdana.ttf')
+        actual_x = int(float(x)/100 * int(width))
+        actual_y = int(float(y)/100 * int(height))
+        actual_font_size = int(float(font_size)/100 * (int(width)/ 2))
+        self.image_editor.text(text, actual_x, actual_y, color, actual_font_size, font_name)
 
     def effect(self, effect_data):
         for effect_data_type in effect_data:

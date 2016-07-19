@@ -135,16 +135,18 @@ class ImageEdit:
         """ Flip image horizontally (left to right). """
         self.output = ImageOps.mirror(self.output)
 
-    def set_font(self, font='Honey-I-spilt-Verdana.ttf', font_size=100):
+    def set_font(self, font_size=100, font_name="Honey-I-spilt-Verdana.ttf"):
         fonts_path = os.path.join(
             os.path.dirname(os.path.dirname(
                 os.path.dirname(__file__))), 'static/fonts')
-        self.font = ImageFont.truetype(fonts_path + '/' + font, font_size)
+        font_file =  fonts_path + '/' + font_name
+        self.font = ImageFont.truetype(font_file, font_size)
 
-    def text(self, text, x, y, fill=(255, 255, 255)):
+    def text(self, text, x, y, fill=(255, 255, 255), font_size=100, font_name="Honey-I-spilt-Verdana.ttf"):
+        """ Write text on an image """
         draw = ImageDraw.Draw(self.output)
         if not self.font:
-            self.set_font()
+            self.set_font(font_size, font_name)
         draw.text((x, y), text, font=self.font, fill=fill)
         del draw
 
