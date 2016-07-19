@@ -118,14 +118,13 @@ class ImageEdit:
         self.output = self.output.rotate(int(actual_value))
 
     def colorize(self, black="#000", white="#fff"):
+        """ applies colors to black and white image """
         self.black_and_white()
         self.output = ImageOps.colorize(self.output, black, white)
 
     def expand(self, border=10, fill="#ff0"):
+        """ Add border to image """
         self.output = ImageOps.expand(self.output, border=border, fill=fill)
-
-    def crop(self, box):
-        self.output = self.output.crop(box)
 
     def vertical_flip(self):
         """ Flip the image vertically (top to bottom). """
@@ -135,37 +134,30 @@ class ImageEdit:
         """ Flip image horizontally (left to right). """
         self.output = ImageOps.mirror(self.output)
 
-    def set_font(self, font='Honey-I-spilt-Verdana.ttf', font_size=100):
+    def set_font(self, font_size=100, font_name="Honey-I-spilt-Verdana.ttf"):
+        """ Sets the font to be used for text drawing """
         fonts_path = os.path.join(
             os.path.dirname(os.path.dirname(
                 os.path.dirname(__file__))), 'static/fonts')
-        self.font = ImageFont.truetype(fonts_path + '/' + font, font_size)
+        font_file =  fonts_path + '/' + font_name
+        self.font = ImageFont.truetype(font_file, font_size)
 
-    def text(self, text, x, y, fill=(255, 255, 255)):
+    def text(self, text, x, y, fill=(255, 255, 255), font_size=100, font_name="Honey-I-spilt-Verdana.ttf"):
+        """ Write text on an image """
         draw = ImageDraw.Draw(self.output)
         if not self.font:
-            self.set_font()
+            self.set_font(font_size, font_name)
         draw.text((x, y), text, font=self.font, fill=fill)
         del draw
 
-    def line(self, start_x=0, end_x=100, start_y=0,
-             end_y=100, fill="#fff", width=50):
-        draw = ImageDraw.Draw(self.output)
-        draw.line((start_x, start_y, end_x, end_y), fill=fill, width=width)
-        del draw
-
-    def rectangle(self, start_x=0, end_x=100,
-                  start_y=0, end_y=100, fill="#fff"):
-        draw = ImageDraw.Draw(self.output)
-        draw.rectangle((start_x, start_y, end_x, end_y), fill=fill)
-        del draw
-
     def preview(self):
+        """ Returns a base64 converted image """
         buffered = cStringIO.StringIO()
         self.output.save(buffered, format=self.image_format)
         return base64.b64encode(buffered.getvalue())
 
     def save(self):
+        """ Saves modified image """
         path = self.path.replace('main', 'edited')
         edit_path = os.path.join(
             os.path.dirname(os.path.dirname(
