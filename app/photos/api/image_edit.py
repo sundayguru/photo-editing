@@ -118,14 +118,13 @@ class ImageEdit:
         self.output = self.output.rotate(int(actual_value))
 
     def colorize(self, black="#000", white="#fff"):
+        """ applies colors to black and white image """
         self.black_and_white()
         self.output = ImageOps.colorize(self.output, black, white)
 
     def expand(self, border=10, fill="#ff0"):
+        """ Add border to image """
         self.output = ImageOps.expand(self.output, border=border, fill=fill)
-
-    def crop(self, box):
-        self.output = self.output.crop(box)
 
     def vertical_flip(self):
         """ Flip the image vertically (top to bottom). """
@@ -136,6 +135,7 @@ class ImageEdit:
         self.output = ImageOps.mirror(self.output)
 
     def set_font(self, font_size=100, font_name="Honey-I-spilt-Verdana.ttf"):
+        """ Sets the font to be used for text drawing """
         fonts_path = os.path.join(
             os.path.dirname(os.path.dirname(
                 os.path.dirname(__file__))), 'static/fonts')
@@ -151,11 +151,13 @@ class ImageEdit:
         del draw
 
     def preview(self):
+        """ Returns a base64 converted image """
         buffered = cStringIO.StringIO()
         self.output.save(buffered, format=self.image_format)
         return base64.b64encode(buffered.getvalue())
 
     def save(self):
+        """ Saves modified image """
         path = self.path.replace('main', 'edited')
         edit_path = os.path.join(
             os.path.dirname(os.path.dirname(
