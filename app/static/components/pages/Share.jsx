@@ -14,11 +14,11 @@ export default class extends React.Component {
       const {id} = this.props.params;
       this.id = id;
       storePhoto.getShare(id);
-      storePhoto.on('singlePhoto', this.detail);
+      storePhoto.on('sharePhoto', this.detail);
     }
 
     componentWillUnmount(){
-      storePhoto.removeListener('singlePhoto', this.detail);
+      storePhoto.removeListener('sharePhoto', this.detail);
     }
 
     componentDidMount(){

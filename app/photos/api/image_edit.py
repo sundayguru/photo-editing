@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from PIL import (
     Image, ImageFilter,
     ImageOps, ImageStat,
@@ -165,3 +166,9 @@ class ImageEdit:
         if not os.path.exists(edit_path):
             os.makedirs(edit_path)
         self.output.save(path, format=self.image_format)
+
+    def download(self, title):
+        response = HttpResponse(content_type="image/jpg")
+        self.output.save(response, 'JPEG')
+        response['Content-Disposition'] = 'attachment; filename="{}.jpg"'.format(title)
+        return response
