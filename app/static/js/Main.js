@@ -32,9 +32,10 @@ if(index == 'Dashboard'){
   localStorage.setItem('user', false)
 }
 
+
 ReactDOM.render(
    <Router history={hashHistory}>
-        <Route path="/" component={ Home }>
+        <Route path="/(_=_)" component={ Home }>
             <IndexRoute component={ FirstPage } />
             <Route path="share/:id" component={ Share } />
             <Route path="upload/:id" component={ Upload } onEnter={requireAuth} />
