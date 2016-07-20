@@ -32,7 +32,7 @@ export default class extends React.Component {
                 </li>
                  <li><span>Image 06</span>
                     <div>
-                        <h3>Crop and Overlay</h3>
+                        <h3>Text Overlay</h3>
                     </div>
                 </li>
             </ul>

@@ -1,12 +1,9 @@
 from django.contrib.auth import logout
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-import urllib
+
 from photos.models import Photo
 from photos.api.image_edit import *
-
-# Create your views here.
 
 
 def index(request):
@@ -17,11 +14,9 @@ def index(request):
     }
     return render(request, 'base.html', context)
 
-
 def logout_view(request):
     logout(request)
     return redirect('/')
-
 
 def download(request):
     id = request.GET.get('image')

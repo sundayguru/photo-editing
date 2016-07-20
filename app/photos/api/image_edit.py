@@ -1,3 +1,7 @@
+import base64
+import cStringIO
+import os
+
 from django.http import HttpResponse
 from PIL import (
     Image, ImageFilter,
@@ -5,9 +9,6 @@ from PIL import (
     ImageEnhance, ImageDraw,
     ImageFont
 )
-import base64
-import cStringIO
-import os
 
 
 class ImageEdit:

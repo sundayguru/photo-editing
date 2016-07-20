@@ -1,7 +1,7 @@
+import json, os
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APITestCase
-import json, os
 
 
 def register(client):
@@ -138,6 +138,13 @@ class PhotoTest(APITestCase):
         result = decode_json(response)
         self.assertEqual(result.get('id'), photo_id)
         self.assertEqual(result.get('title'), 'test image')
+
+    def test_photo_download(self):
+        response = create_photo(self.client)
+        result = decode_json(response)
+        photo_id = result.get('id', 0)
+        response = self.client.get('/download?image=' + str(photo_id))
+        self.assertEqual(response.status_code, 301)
 
     def test_photo_delete(self):
         response = create_photo(self.client)
