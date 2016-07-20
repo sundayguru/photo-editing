@@ -157,15 +157,12 @@ export default class extends React.Component {
       var image_src = this.state.file.edited_image ? this.state.file.edited_image : this.state.file.image;
         return (
          <div class="col-md-12">
-            <h3>Image Preview </h3>
             <form class="form-horizontal" method="post" onSubmit={this.onSubmit.bind(this)}>
               <fieldset>
                 <div class="col-md-6 no-pad-left">
                   <div class="image-preview">
                   <div class="col-lg-12 no-pad">
-                    <input type="text" disabled={true}
-                      value={ "Share Link: " + share_link }
-                      class="col-lg-11 no-pad" />
+                      <a href={"/download/?image=" + this.state.file.id }  target="_blank" >Download</a>
                       <ShareButtons share_link={share_link} />
                   </div>
                     <Loader loaded={this.state.loaded} top="50%" left="50%" />
