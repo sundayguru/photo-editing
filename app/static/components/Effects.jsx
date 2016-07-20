@@ -83,7 +83,7 @@ export default class extends React.Component {
                     <RangeField id="fontSize" label="Font Size" value={effects.text_overlay.fontSize} check={check} change={change} type="text_overlay" />
                     <RangeField id="x" label="Horizontal Position" value={effects.text_overlay.x} check={check} change={change} type="text_overlay" />
                     <RangeField id="y" label="Vertical Position" value={effects.text_overlay.y} check={check} change={change} type="text_overlay" />
-                    <InputField id="color" label="Color Code(Hex)" value={effects.text_overlay.color} check={check} change={change} type="text_overlay" />
+                    <ColorField id="color" label="Text Color" value={effects.text_overlay.color} check={check} change={change} type="text_overlay" />
                     <SelectField id="font_name" label="Font" value={effects.text_overlay.font_name} check={check} change={change} options={this.fonts} defaultOption="Honey-I-spilt-Verdana.ttf" type="text_overlay" />
                 </div>
                  <div class="tab-pane fade " id="image_colorize">
