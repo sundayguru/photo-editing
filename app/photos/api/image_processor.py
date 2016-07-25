@@ -21,6 +21,9 @@ class ImageProcessor:
     def preview(self):
         return self.image_editor.preview()
 
+    def applied_effects(self):
+        return self.image_editor.applied_effects
+
     def save(self):
         self.image_editor.save()
         return self.image.url.replace('main', 'edited')

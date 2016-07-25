@@ -16,19 +16,19 @@ export default class extends React.Component {
     render() {
         return (
          <div class="row">
-         <Notifications />
+          <Notifications />
           <Nav user={ this.state.user }/>
           <div class="container">
             <Subnav />
             <hr/>
              <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-3 line-right no-pad">
-                    <SideNav />
+                  <SideNav />
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-9">
-                    { this.props.children }
-                    <DetailModal />
-                    <FolderModal />
+                  { this.props.children }
+                  <DetailModal />
+                  <FolderModal />
                 </div>
             </div>
           </div>

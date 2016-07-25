@@ -65,7 +65,7 @@ class PhotoPreview(View):
         if photo:
             image_processor = ImageProcessor(photo)
             image_processor.process(effect_obj)
-            response_data = {'image': image_processor.preview()}
+            response_data = {'image': image_processor.preview(), 'applied_effects': image_processor.applied_effects()}
         response_json = json.dumps(response_data)
         return HttpResponse(response_json, content_type="application/json")
 

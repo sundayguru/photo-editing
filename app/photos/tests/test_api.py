@@ -192,24 +192,31 @@ class PhotoTest(APITestCase):
     def test_photo_effect_preview(self):
         response = create_photo(self.client)
         result = self.photo_effect('{"transform":{"vertical_flip":"true","invert":"true","grayscale":"true","black_and_white":"true","equalize":"true"}}')
-        self.assertNotEqual(result.get('image'), '')
+        effect_applied = 'invert' in result.get('applied_effects', [])
         self.assertNotEqual(result.get('image'), None)
+        self.assertTrue(effect_applied)
 
     def test_photo_effect_text_overlay(self):
         response = create_photo(self.client)
         result = self.photo_effect('{"text_overlay":{"textValue":"love is key","fontSize":"26","x":"22","y":"24","color":"#ff3400","font_name":"dahot2.Filxgirl.ttf"}}')
+        effect_applied = 'text' in result.get('applied_effects', [])
+        self.assertTrue(effect_applied)
         self.assertNotEqual(result.get('image'), '')
         self.assertNotEqual(result.get('image'), None)
 
     def test_photo_effect_colorize(self):
         response = create_photo(self.client)
         result = self.photo_effect('{"colorize":{"black":"#5f1212","white":"#8b572a"}}')
+        effect_applied = 'colorize' in result.get('applied_effects', [])
+        self.assertTrue(effect_applied)
         self.assertNotEqual(result.get('image'), '')
         self.assertNotEqual(result.get('image'), None)
 
     def test_photo_effect_border(self):
         response = create_photo(self.client)
         result = self.photo_effect('{"border":{"size":"26","border_color":"#ff3737"}}')
+        effect_applied = 'border' in result.get('applied_effects', [])
+        self.assertTrue(effect_applied)
         self.assertNotEqual(result.get('image'), '')
         self.assertNotEqual(result.get('image'), None)
 

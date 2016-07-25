@@ -8,6 +8,7 @@ import ShareButtons from './ShareButtons';
 export default class extends React.Component {
     constructor() {
       super();
+      this.timer = null;
       this.updateComplete = this.updateComplete.bind(this);
       this.previewComplete = this.previewComplete.bind(this);
       this.detail = this.detail.bind(this);
@@ -104,7 +105,13 @@ export default class extends React.Component {
       var effects = this.state.effects;
       effects[type][name] = value;
       this.setState({effects: effects});
-      this.getEffectPreview();
+      if(!this.timer){
+        var _this = this
+        this.timer = setTimeout(function() {
+          _this.timer = null;
+          _this.getEffectPreview();
+        }, 1000);
+      }
     }
 
     getEffectPreview(){
@@ -114,7 +121,6 @@ export default class extends React.Component {
     }
 
     decodeEffects(effectString){
-      console.log(effectString);
       var effects = JSON.parse(effectString);
       for(var singleEffect in effects){
         for(var effect_type in effects[singleEffect]){
