@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Photo Editing</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mdi/css/materialdesignicons.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/themes/cosmo/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/custom.min.css' %}">
+    <link href="{% static 'css/slide.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/magnific-popup.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="fb-root"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=135058293567210";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <input type="hidden" name="index" id='index' value="{{index}}" />
+    <input type="hidden" name="active-folder" id='active-folder' value="0" />
+    <input type="hidden" name="currentUser" id='current-user' value="{{user}}" />
+    <p id="form-token">{% csrf_token %}</p>
+    <div id="app"></div>
+    <script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'build/client.min.js' %}"></script>
+</body>
+
+</html>

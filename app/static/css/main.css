@@ -1,0 +1,291 @@
+body {
+    position: relative;
+
+    overflow-x: hidden !important;
+}
+
+.table-of-contents {
+    height: 73vh;
+}
+
+
+.navbar-default {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.right {
+    float: right;
+}
+
+.toolbar:hover {
+    color: black !important;
+}
+
+.left {
+    float: left;
+}
+
+.center {
+    text-align: center !important;
+}
+
+.no-file {
+    margin-top: 20%;
+
+    text-align: center;
+}
+
+.line-left {
+    border-left: 1px #f4f4f4 solid;
+}
+
+.no-pad {
+    padding: 0 !important;
+}
+
+.no-pad-left {
+    padding-left: 0 !important;
+}
+
+.line-right {
+    border-right: 1px #ccc solid;
+}
+
+.icon-size-small {
+    max-width: 25px;
+    margin-right: 10px;
+}
+
+.options {
+    float: right;
+}
+
+.options .icon-size-small {
+    float: left;
+    max-width: 20px;
+    margin-right: 10px;
+}
+
+.padupdown {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padleft-20 {
+    padding-left: 20px;
+}
+
+.icon-size-medium {
+    max-width: 50px;
+    margin-bottom: 5px;
+}
+
+.list-group-item {
+    color: black;
+    border: none;
+    background: none;
+}
+
+.main-item {
+    position: relative;
+
+    height: 110px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    text-align: center !important;
+
+    color: grey;
+}
+
+.main-item:hover {
+    cursor: pointer;
+    text-decoration: none;
+
+    color: #eee333;
+}
+
+.active-main {
+    font-weight: bold;
+
+    color: white;
+    border-radius: 6px;
+    background-color: gray;
+}
+
+
+.toolbar-nav {
+    margin-top: 35px;
+}
+
+.toolbar-btn {
+    margin-top: 10px;
+}
+
+.toolbar-nav li,
+.toolbar-btn li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.login {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+
+    width: 500px;
+}
+
+.login .panel {
+    background-color: rgba(255,255,255,.8);
+}
+
+.upload div {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+.upload div div {
+    padding: 10px;
+    margin-top: 20%;
+
+    text-align: center;
+}
+
+#notification-wrapper {
+    position: absolute;
+    z-index: 9999999 !important;
+}
+
+.empty {
+    text-align: center !important;
+}
+
+.empty img {
+    width: 120px;
+    margin-top: 100px;
+
+    opacity: .1;
+}
+
+.preview {
+    text-align: center !important;
+}
+
+.preview img {
+    max-height: 90vh !important;
+}
+
+.thumbnail .preview img {
+    max-height: 200px;
+}
+
+
+.crop {
+    position: relative;
+
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.crop a {
+    position: absolute;
+    top: -100%;
+    right: -100%;
+    bottom: -100%;
+    left: -100%;
+
+    display: block;
+    min-width: 100%;
+    min-height: 100%;
+    margin: auto;
+}
+
+.btn-info {
+    color: #fff;
+    border-color: #00aced;
+    background-color: #00aced;
+}
+
+.btn-info:hover {
+    border-color: #0084b4;
+    background-color: #0084b4;
+}
+
+.btn-block {
+    text-align: left;
+}
+/* Mdi style */
+
+.mdi::before {
+    font-size: 24px;
+    line-height: 14px;
+}
+.btn .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.btn-xs .mdi::before {
+    top: 3px;
+
+    font-size: 18px;
+}
+.btn-sm .mdi::before {
+    top: 3px;
+
+    font-size: 18px;
+}
+.dropdown-menu .mdi {
+    width: 18px;
+}
+.dropdown-menu .mdi::before {
+    position: relative;
+    top: 4px;
+    left: -8px;
+}
+.nav .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.navbar .navbar-toggle .mdi::before {
+    position: relative;
+    top: 4px;
+
+    color: #fff;
+}
+.breadcrumb .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.breadcrumb a:hover {
+    text-decoration: none;
+}
+.breadcrumb a:hover span {
+    text-decoration: underline;
+}
+.alert .mdi::before {
+    position: relative;
+    top: 4px;
+
+    margin-right: 2px;
+}
+.input-group-addon .mdi::before {
+    position: relative;
+    top: 3px;
+}
+.navbar-brand .mdi::before {
+    position: relative;
+    top: 2px;
+
+    margin-right: 2px;
+}
+.list-group-item .mdi::before {
+    position: relative;
+    top: 3px;
+    left: -3px;
+}
